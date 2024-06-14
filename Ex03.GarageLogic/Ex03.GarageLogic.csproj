@@ -43,7 +43,7 @@
     <Compile Include="Entities\Engine\AbstractEngine.cs" />
     <Compile Include="Entities\Engine\ElectricEngine.cs" />
     <Compile Include="Entities\Engine\FuelEngine.cs" />
-    <Compile Include="Entities\Engine\EngineFuelType.cs" />
+    <Compile Include="Entities\Engine\eEngineType.cs" />
     <Compile Include="Entities\Vehicles\Car\Car.cs" />
     <Compile Include="Entities\Vehicles\Car\CarColor.cs" />
     <Compile Include="Entities\Vehicles\Car\eCarDoors.cs" />
@@ -54,6 +54,9 @@
     <Compile Include="Entities\Wheels\Wheel.cs" />
     <Compile Include="Factory\VehicleFactory.cs" />
     <Compile Include="Factory\VehicleType.cs" />
+    <Compile Include="Garage\AddressCard.cs" />
+    <Compile Include="Garage\eState.cs" />
+    <Compile Include="Garage\Garage.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

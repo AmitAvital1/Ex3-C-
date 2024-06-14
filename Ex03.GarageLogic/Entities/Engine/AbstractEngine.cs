@@ -2,7 +2,7 @@
 {
     public abstract class AbstractEngine
     {
-        protected readonly EngineType m_FuelType;
+        protected readonly eEngineType m_FuelType;
         public string FuelType()
         {
             return m_FuelType.ToString();
