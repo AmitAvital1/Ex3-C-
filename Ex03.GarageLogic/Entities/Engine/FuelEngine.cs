@@ -1,9 +1,16 @@
-﻿namespace Ex03.GarageLogic.Entities.Engine
+﻿using System;
+
+namespace Ex03.GarageLogic.Entities.Engine
 {
     public class FuelEngine : AbstractEngine
     {
         private float m_CurrentFuel;
-        private readonly float r_MaxFuel; //In Liters
+        private readonly float m_MaxFuel; //In Liters
+
+        public FuelEngine(float i_CurrentFuel, float i_MaxFuel, string i_FuelType)
+        {
+            bool IsValidFuelType = Enum.TryParse<eEngineType>(i_FuelType, true, out base.m_FuelType);
+        }
 
         public override float Energy()
         {
