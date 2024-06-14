@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Ex03.GarageLogic.Garage
 {
-    class Garage
+    public class Garage
     {
+        private IList<AddressCard> m_Cars;
     }
 }

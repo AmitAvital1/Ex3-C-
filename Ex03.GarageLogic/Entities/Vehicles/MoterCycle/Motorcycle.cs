@@ -23,6 +23,7 @@ namespace Ex03.GarageLogic.Entities.Vehicles.Motorcycle
             {
                 throw new ArgumentException($"License Type '{i_LicenseType}' invalid.");
             }
+            m_EngineCapacity = i_EngineCapacity;
         }
     }
 }

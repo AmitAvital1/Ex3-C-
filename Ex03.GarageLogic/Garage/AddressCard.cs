@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Ex03.GarageLogic.Entities.Vehicles;
 
 namespace Ex03.GarageLogic.Garage
 {
-    class AddressCard
+    public class AddressCard
     {
+        private readonly Vehicle m_Vechile;
+        public string m_OwnerName { get; set; }
+        public string m_OwnerPhone { get; set; }
+        public eState m_State { get; set; }
     }
 }
