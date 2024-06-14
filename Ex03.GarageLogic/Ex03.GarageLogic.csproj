@@ -49,9 +49,10 @@
     <Compile Include="Entities\Vehicles\Car\eCarDoors.cs" />
     <Compile Include="Entities\Vehicles\MoterCycle\LicenseType.cs" />
     <Compile Include="Entities\Vehicles\MoterCycle\Motorcycle.cs" />
-    <Compile Include="Entities\Vehicles\Truck.cs" />
+    <Compile Include="Entities\Vehicles\Truck\Truck.cs" />
     <Compile Include="Entities\Vehicles\Vehicle.cs" />
     <Compile Include="Entities\Wheels\Wheel.cs" />
+    <Compile Include="Factory\Dto\VehiclesDto.cs" />
     <Compile Include="Factory\VehicleFactory.cs" />
     <Compile Include="Factory\VehicleType.cs" />
     <Compile Include="Garage\AddressCard.cs" />

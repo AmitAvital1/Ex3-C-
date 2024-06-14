@@ -11,7 +11,6 @@ namespace Ex03.GarageLogic.Entities.Wheels
         private readonly string r_ManufacturerName;
         private float m_CurrentAirPressure;
 
-
         //TODO
         public void InflateWheel(){}
     }
