@@ -38,5 +38,22 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="Entities\Engine\AbstractEngine.cs" />
+    <Compile Include="Entities\Engine\ElectricEngine.cs" />
+    <Compile Include="Entities\Engine\FuelEngine.cs" />
+    <Compile Include="Entities\Engine\EngineFuelType.cs" />
+    <Compile Include="Entities\Vehicles\Car\Car.cs" />
+    <Compile Include="Entities\Vehicles\Car\CarColor.cs" />
+    <Compile Include="Entities\Vehicles\Car\eCarDoors.cs" />
+    <Compile Include="Entities\Vehicles\MoterCycle\LicenseType.cs" />
+    <Compile Include="Entities\Vehicles\MoterCycle\Motorcycle.cs" />
+    <Compile Include="Entities\Vehicles\Truck.cs" />
+    <Compile Include="Entities\Vehicles\Vehicle.cs" />
+    <Compile Include="Entities\Wheels\Wheel.cs" />
+    <Compile Include="Factory\VehicleFactory.cs" />
+    <Compile Include="Factory\VehicleType.cs" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
