@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ex03.ConsoleUI.GarageManagerHandler;
 
 namespace Ex03.ConsoleUI
 {
@@ -10,7 +11,13 @@ namespace Ex03.ConsoleUI
     {
         public static void Main() 
         {
-            Console.WriteLine("hello world !");
+            run();
+        }
+
+        private static void run()
+        {
+            GarageManager garageManager = new GarageManager();
+            garageManager.ActivateGarage();
         }
     }
 }

@@ -11,20 +11,28 @@ namespace Ex03.GarageLogic.Garage
             m_Cars = new List<AddressCard>();
         }
 
-        public void AddCar(AddressCard i_Car)
+        public void AddVehicles(AddressCard i_Car)
         {
+            m_Cars.Add(i_Car);
+        }
+
+        public bool CheckIfCarExistInGarage(string i_Car)
+        {
+            bool isCarExistInGarage = false;
+
             foreach (var existingCar in m_Cars)
             {
-                if (existingCar.m_OwnerName == i_Car.m_OwnerName && existingCar.m_OwnerPhone == i_Car.m_OwnerPhone)
+                string currentCarPlateNumber = existingCar.GetVehicle().GetPlateNumber();
+                if ( currentCarPlateNumber.Equals(i_Car))
                 {
                     // Car already exists, change its state to "Repair"
                     existingCar.m_State = eState.Repair;
-                    return;
+                    isCarExistInGarage = true;
+                    break;
                 }
             }
 
-            // Car doesn't exist, add it to the garage
-            m_Cars.Add(i_Car);
+            return isCarExistInGarage;
         }
     }
 }

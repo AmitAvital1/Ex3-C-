@@ -24,5 +24,15 @@ namespace Ex03.GarageLogic.Entities.Vehicles
             m_EnergyVolume = i_EnergyVolume ?? throw new ArgumentNullException(nameof(i_EnergyVolume));
             m_Wheels = i_Wheels ?? throw new ArgumentNullException(nameof(i_Wheels));
         }
+
+        public string GetModelName()
+        {
+            return r_ModelName;
+        }
+
+        public string GetPlateNumber()
+        {
+            return r_PlateNumber;
+        }
     }
 }

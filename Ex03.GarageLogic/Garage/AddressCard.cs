@@ -8,5 +8,10 @@ namespace Ex03.GarageLogic.Garage
         public string m_OwnerName { get; set; }
         public string m_OwnerPhone { get; set; }
         public eState m_State { get; set; }
+
+        public Vehicle GetVehicle()
+        {
+            return m_Vechile;
+        }
     }
 }
