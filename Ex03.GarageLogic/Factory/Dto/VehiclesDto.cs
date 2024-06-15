@@ -9,42 +9,49 @@ namespace Ex03.GarageLogic.Factory.Dto
     public class VehicleDto
     {
         public string Type { get; set; }
+        public string ModelName { get; set; }
         public string LicenseType { get; set; }
         public int EngineCapacity { get; set; }
         public string EngineType { get; set; }
         public string FuelType { get; set; }
-        public int CapacityEnergy { get; set; }
+        public float CapacityEnergy { get; set; }
         public string Color { get; set; }
         public int NumberOfDoors { get; set; }
         public float CurrentEnergy { get; set; }
         public bool IsTransportDangerous { get; set; }
         public float TransportCapacity { get; set; }
         public string PlateNumber { get; set; }
-        public float WheelCapacity { get; set; }
+        public IList<WheelDto> WheelsData { get; set; }
         public string OwnerName { get; set; }
         public string OwnerPhone { get; set; }
 
         public class VehicleDtoBuilder
         {
+            private string m_ModelName;
             private string m_Type;
             private string m_LicenseType;
             private int m_EngineCapacity;
             private string m_EngineType;
             private string m_FuelType;
-            private int m_CapacityEnergy;
+            private float m_CapacityEnergy;
             private string m_Color;
             private int m_NumberOfDoors;
             private float m_CurrentEnergy;
             private bool m_IsTransportDangerous;
             private float m_TransportCapacity;
             private string m_PlateNumber;
-            private float m_WheelCapacity;
+            private IList<WheelDto> m_WheelsData;
             private string m_OwnerName;
             private string m_OwnerPhone;
 
             public VehicleDtoBuilder SetCurrentEnergy(float i_CurrentEnergy)
             {
                 this.m_CurrentEnergy = i_CurrentEnergy;
+                return this;
+            }
+            public VehicleDtoBuilder SetModelName(string i_ModelName)
+            {
+                this.m_ModelName = i_ModelName;
                 return this;
             }
 
@@ -60,9 +67,9 @@ namespace Ex03.GarageLogic.Factory.Dto
                 return this;
             }
 
-            public VehicleDtoBuilder SetWheelCapacity(float i_WheelCapacity)
+            public VehicleDtoBuilder SetWheelsData(IList<WheelDto> i_WheelsData)
             {
-                this.m_WheelCapacity = i_WheelCapacity;
+                this.m_WheelsData = i_WheelsData;
                 return this;
             }
 
@@ -96,9 +103,9 @@ namespace Ex03.GarageLogic.Factory.Dto
                 return this;
             }
 
-            public VehicleDtoBuilder SetCapacityElectric(int i_CapacityElectric)
+            public VehicleDtoBuilder SetCapacityEnergy(float i_CapacityEnergy)
             {
-                this.m_CapacityEnergy = i_CapacityElectric;
+                this.m_CapacityEnergy = i_CapacityEnergy;
                 return this;
             }
 
@@ -137,6 +144,7 @@ namespace Ex03.GarageLogic.Factory.Dto
                 return new VehicleDto
                 {
                     Type = this.m_Type,
+                    ModelName = this.m_ModelName,
                     LicenseType = this.m_LicenseType,
                     EngineCapacity = this.m_EngineCapacity,
                     EngineType = this.m_EngineType,
@@ -148,7 +156,7 @@ namespace Ex03.GarageLogic.Factory.Dto
                     IsTransportDangerous = this.m_IsTransportDangerous,
                     TransportCapacity = this.m_TransportCapacity,
                     PlateNumber = this.m_PlateNumber,
-                    WheelCapacity = this.m_WheelCapacity,
+                    WheelsData = this.m_WheelsData,
                     OwnerName = this.m_OwnerName,
                     OwnerPhone = this.m_OwnerPhone
                 };

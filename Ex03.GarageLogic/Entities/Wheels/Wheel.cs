@@ -9,7 +9,20 @@ namespace Ex03.GarageLogic.Entities.Wheels
     public class Wheel
     {
         private readonly string r_ManufacturerName;
+        private float m_MaxAirPressure;
         private float m_CurrentAirPressure;
+
+        internal Wheel(string i_ManufacturerName, float i_CurrentAirPressure, float i_MaxAirPressure)
+        {
+            if (i_CurrentAirPressure > i_MaxAirPressure)
+            {
+                throw new ArgumentException("Error: Current pressure bigger then max air pressure");
+            }
+
+            this.r_ManufacturerName = i_ManufacturerName;
+            this.m_CurrentAirPressure = i_CurrentAirPressure;
+            this.m_MaxAirPressure = i_MaxAirPressure;
+        }
 
         //TODO
         public void InflateWheel(){}

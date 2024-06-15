@@ -15,8 +15,8 @@ namespace Ex03.GarageLogic.Entities.Vehicles.Motorcycle
         private int m_EngineCapacity;
 
         internal Motorcycle(string i_LicenseType, int i_EngineCapacity, AbstractEngine i_Engine, string i_ModelName, 
-            string i_PlateNumber, string i_EnergyVolume, IList<Wheel> i_Wheels)
-            : base(i_Engine, i_ModelName, i_PlateNumber, i_EnergyVolume, i_Wheels)
+            string i_PlateNumber, IList<Wheel> i_Wheels)
+            : base(i_Engine, i_ModelName, i_PlateNumber, i_Wheels)
         {
             bool IsValidLicenseType = Enum.TryParse<eLicenseType>(i_LicenseType, true, out m_LicenseType);
 
@@ -35,7 +35,6 @@ namespace Ex03.GarageLogic.Entities.Vehicles.Motorcycle
             private AbstractEngine m_Engine;
             private string m_ModelName;
             private string m_PlateNumber;
-            private string m_EnergyVolume;
             private IList<Wheel> m_Wheels;
 
             public MotorcycleBuilder SetLicenseType(string i_LicenseType)
@@ -68,12 +67,6 @@ namespace Ex03.GarageLogic.Entities.Vehicles.Motorcycle
                 return this;
             }
 
-            public MotorcycleBuilder SetEnergyVolume(string i_EnergyVolume)
-            {
-                m_EnergyVolume = i_EnergyVolume;
-                return this;
-            }
-
             public MotorcycleBuilder SetWheels(IList<Wheel> i_Eheels)
             {
                 m_Wheels = i_Eheels;
@@ -82,7 +75,7 @@ namespace Ex03.GarageLogic.Entities.Vehicles.Motorcycle
 
             public Motorcycle Build()
             {
-                return new Motorcycle(m_LicenseType, m_EngineCapacity, m_Engine, m_ModelName, m_PlateNumber, m_EnergyVolume, m_Wheels);
+                return new Motorcycle(m_LicenseType, m_EngineCapacity, m_Engine, m_ModelName, m_PlateNumber, m_Wheels);
             }
         }
     }

@@ -3,6 +3,7 @@ using Ex03.GarageLogic.Entities.Vehicles.Motorcycle;
 using Ex03.GarageLogic.Entities.Vehicles;
 using Ex03.GarageLogic.Garage;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,16 +25,16 @@ namespace Ex03.ConsoleUI.GarageManagerHandler
         public void ActivateGarage()
         {
            try
-            {
-                while (true)
-                {
-                    showMenu();
-                }
-            }
-            catch (Exception ex) 
-            {
-                Console.WriteLine("An error occurred: " + ex.Message);
-            }
+           {
+               while (true)
+               {
+                   showMenu();
+               }
+           }
+           catch (Exception ex) 
+           {
+               Console.WriteLine("An error occurred: " + ex.Message);
+           }
         }
 
         private void showMenu()
@@ -149,18 +150,21 @@ namespace Ex03.ConsoleUI.GarageManagerHandler
 
         private void getDetailsAboutVehicle(string i_PlateNumber)
         {
+            string modelName = getVehicleModelName();
             (string ownerName, string ownerPhone) = getOwnerDetailsFromUser();
             int vehicleType = getVehicleTypeFromUser();
             bool isFuel = askUserIfHeWantToEnterDataAboutVehicleWithFuelEngine();
-            float energyStatus = getEnergyStatusOfTheCurrentVehicle(isFuel);
-            float numberOfAirWheels = getNumberOfAirInWheels();
+            (float energyMaxTank, float energyStatus) = getEnergyStatusOfTheCurrentVehicle(isFuel);
+            IList<WheelDto> wheelsData = getNumberOfAirInWheels();
 
             VehicleData vehicleData = new VehicleData
             {
+                ModelName = modelName,
                 VehicleType = vehicleType,
                 IsFuel = isFuel,
+                EnergyMaxTank = energyMaxTank,
                 EnergyStatus = energyStatus,
-                NumberOfAirWheels = numberOfAirWheels,
+                WheelsData = wheelsData,
                 OwnerName = ownerName,
                 OwnerPhone = ownerPhone
             };
@@ -203,6 +207,14 @@ namespace Ex03.ConsoleUI.GarageManagerHandler
             return int.Parse(Console.ReadLine());
         }
 
+        private string getVehicleModelName()
+        {
+            Console.WriteLine("Please enter the vehicle model name:");
+            string modelName = Console.ReadLine();
+
+            return modelName;
+        }
+
         private (string, string) getOwnerDetailsFromUser()
         {
             Console.WriteLine("Please enter the owner's name:");
@@ -214,23 +226,75 @@ namespace Ex03.ConsoleUI.GarageManagerHandler
             return (ownerName, ownerPhone);
         }
 
-        private float getNumberOfAirInWheels()
+        private IList<WheelDto> getNumberOfAirInWheels()
         {
-            float airPressure;
+            int numOfWheels;
 
-            Console.WriteLine("Please enter the air pressure for each wheel (in psi):");
+            Console.WriteLine("Please enter the number of wheels:");
 
-            while (!float.TryParse(Console.ReadLine(), out airPressure) || airPressure < 0)
+            while (!int.TryParse(Console.ReadLine(), out numOfWheels) || numOfWheels < 0)
             {
-                Console.WriteLine("Invalid input. Please enter a valid positive number for the air pressure:");
+                Console.WriteLine("Invalid input. Please enter a valid positive number for the wheels number:");
             }
 
-            return airPressure;
+            IList<WheelDto> wheelsData = new List<WheelDto>(numOfWheels);
+
+            for(int i = 0; i < numOfWheels; i++)
+            {
+                wheelsData.Add(getWheelDetails());
+            }
+
+            return wheelsData;
         }
 
-        private float getEnergyStatusOfTheCurrentVehicle(bool i_IsFuel)
+        public WheelDto getWheelDetails()
         {
+            float maxAirPressure;
+            float airPressure;
+
+            Console.WriteLine("Please enter the producer of the wheel:");
+            string producerName = Console.ReadLine();
+
+            Console.WriteLine("Please enter the max air pressure the wheel (in psi):");
+
+            while (!float.TryParse(Console.ReadLine(), out maxAirPressure) || maxAirPressure < 0)
+            {
+                Console.WriteLine("Invalid input. Please enter a valid positive number for the max air pressure:");
+            }
+
+            Console.WriteLine("Please enter the air pressure the wheel (in psi):");
+
+            while (!float.TryParse(Console.ReadLine(), out airPressure) || airPressure < 0 || airPressure > maxAirPressure)
+            {
+                Console.WriteLine("Invalid input. Please enter a valid positive number for the air pressure or not bigger then max air pressure:");
+            }
+
+            return new WheelDto
+                       {
+                           ManufacturerName = producerName,
+                           CurrentAirPressure = airPressure,
+                           MaxAirPressure = maxAirPressure
+            };
+        }
+
+        private (float, float) getEnergyStatusOfTheCurrentVehicle(bool i_IsFuel)
+        {
+            float maxEnergyTank;
             float statusEnergy;
+
+            if (i_IsFuel)
+            {
+                Console.WriteLine("Please enter the max amount of fuel tank in liters:");
+            }
+            else
+            {
+                Console.WriteLine("Please enter the max battery capacity in hours:");
+            }
+
+            while (!float.TryParse(Console.ReadLine(), out maxEnergyTank) || maxEnergyTank < 0)
+            {
+                Console.WriteLine("Invalid input. Please enter a valid positive number:");
+            }
 
             if (i_IsFuel)
             {
@@ -238,15 +302,15 @@ namespace Ex03.ConsoleUI.GarageManagerHandler
             }
             else
             {
-                Console.WriteLine("Please enter the current battery status (in percentage):");
+                Console.WriteLine("Please enter the current battery status (in hours):");
             }
 
-            while (!float.TryParse(Console.ReadLine(), out statusEnergy) || statusEnergy < 0)
+            while (!float.TryParse(Console.ReadLine(), out statusEnergy) || statusEnergy < 0 || maxEnergyTank < statusEnergy)
             {
-                Console.WriteLine("Invalid input. Please enter a valid positive number:");
+                Console.WriteLine("Invalid input. Please enter a valid positive number or number that not bigger then the tank:");
             }
 
-            return statusEnergy;
+            return (maxEnergyTank, statusEnergy);
         }
 
         private void addCar(VehicleData i_VehicleData, string i_PlateNumber)
@@ -256,10 +320,12 @@ namespace Ex03.ConsoleUI.GarageManagerHandler
 
             var vehicleDto = new VehicleDto.VehicleDtoBuilder()
                     .SetPlateNumber(i_PlateNumber)
+                    .SetModelName(i_VehicleData.ModelName)
                     .SetType("Car")
                     .SetColor(carColor)
+                    .SetCapacityEnergy(i_VehicleData.EnergyMaxTank)
                     .SetCurrentEnergy(i_VehicleData.EnergyStatus)
-                    .SetWheelCapacity(i_VehicleData.NumberOfAirWheels)
+                    .SetWheelsData(i_VehicleData.WheelsData)
                     .SetNumbersOfDoors(numberOfDoors)
                     .SetOwnerName(i_VehicleData.OwnerName)
                     .SetOwnerPhone(i_VehicleData.OwnerPhone);
@@ -284,7 +350,7 @@ namespace Ex03.ConsoleUI.GarageManagerHandler
             string engineType = null;
             bool isValidType = false;
 
-            Console.WriteLine("Please enter the engine type (Soler, Octan95, Octan96, Octan98, Electric):");
+            Console.WriteLine("Please enter the engine type (Soler, Octan95, Octan96, Octan98):");
 
             while (!isValidType)
             {
@@ -292,12 +358,11 @@ namespace Ex03.ConsoleUI.GarageManagerHandler
                 isValidType = engineType.Equals("Soler", StringComparison.OrdinalIgnoreCase) ||
                               engineType.Equals("Octan95", StringComparison.OrdinalIgnoreCase) ||
                               engineType.Equals("Octan96", StringComparison.OrdinalIgnoreCase) ||
-                              engineType.Equals("Octan98", StringComparison.OrdinalIgnoreCase) ||
-                              engineType.Equals("Electric", StringComparison.OrdinalIgnoreCase);
+                              engineType.Equals("Octan98", StringComparison.OrdinalIgnoreCase);
 
                 if (!isValidType)
                 {
-                    Console.WriteLine("Invalid input. Please enter a valid engine type (Soler, Octan95, Octan96, Octan98, Electric):");
+                    Console.WriteLine("Invalid input. Please enter a valid engine type (Soler, Octan95, Octan96, Octan98):");
                 }
             }
 

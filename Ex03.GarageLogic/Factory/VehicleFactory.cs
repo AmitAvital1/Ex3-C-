@@ -43,6 +43,9 @@ namespace Ex03.GarageLogic.Factory
                         .SetColor(i_VehicleDto.Color)
                         .SetNumOfDoors(i_VehicleDto.NumberOfDoors) 
                         .SetEngine(new FuelEngine(i_VehicleDto.CurrentEnergy, i_VehicleDto.CapacityEnergy, i_VehicleDto.FuelType)) 
+                        .SetModelName(i_VehicleDto.ModelName)
+                        .SetPlateNumber(i_VehicleDto.PlateNumber)
+                        .SetWheels(i_VehicleDto.WheelsData)
                         .Build();
 
                 case eVehicleType.ElectricTruck:

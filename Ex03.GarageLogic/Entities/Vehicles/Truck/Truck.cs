@@ -14,8 +14,8 @@ namespace Ex03.GarageLogic.Entities.Vehicles
         private float m_TransportCapacity;
 
         internal Truck(bool i_IsTransportDangerous, float i_TransportCapacity, AbstractEngine i_Engine, 
-            string i_ModelName, string i_PlateNumber, string i_EnergyVolume, IList<Wheel> i_Wheels)
-            : base(i_Engine, i_ModelName, i_PlateNumber, i_EnergyVolume, i_Wheels)
+            string i_ModelName, string i_PlateNumber, IList<Wheel> i_Wheels)
+            : base(i_Engine, i_ModelName, i_PlateNumber, i_Wheels)
         {
             m_IsTransportDangerous = i_IsTransportDangerous;
             m_TransportCapacity = i_TransportCapacity;
@@ -28,7 +28,6 @@ namespace Ex03.GarageLogic.Entities.Vehicles
             private AbstractEngine m_Engine;
             private string m_ModelName;
             private string m_PlateNumber;
-            private string m_EnergyVolume;
             private IList<Wheel> m_Wheels;
 
             public TruckBuilder SetIsTransportDangerous(bool i_IsTransportDangerous)
@@ -61,12 +60,6 @@ namespace Ex03.GarageLogic.Entities.Vehicles
                 return this;
             }
 
-            public TruckBuilder SetEnergyVolume(string i_EnergyVolume)
-            {
-                m_EnergyVolume = i_EnergyVolume;
-                return this;
-            }
-
             public TruckBuilder SetWheels(IList<Wheel> i_Wheels)
             {
                 m_Wheels = i_Wheels;
@@ -75,7 +68,7 @@ namespace Ex03.GarageLogic.Entities.Vehicles
 
             public Truck Build()
             {
-                return new Truck(m_IsTransportDangerous, m_TransportCapacity, m_Engine, m_ModelName, m_PlateNumber, m_EnergyVolume, m_Wheels);
+                return new Truck(m_IsTransportDangerous, m_TransportCapacity, m_Engine, m_ModelName, m_PlateNumber, m_Wheels);
             }
         }
     }
