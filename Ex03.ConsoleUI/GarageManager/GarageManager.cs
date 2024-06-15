@@ -172,10 +172,10 @@ namespace Ex03.ConsoleUI.GarageManagerHandler
                     addCar(vehicleDtoBuilder);
                     break;
                 case 2:
-                    addTruck(vehicleData, i_PlateNumber);
+                    addTruck(vehicleDtoBuilder);
                     break;
                 case 3:
-                    addMotorcycle(vehicleData, i_PlateNumber);
+                    addMotorcycle(vehicleDtoBuilder);
                     break;
                 default:
                     Console.WriteLine("Invalid choice. Please try again.");
@@ -198,14 +198,78 @@ namespace Ex03.ConsoleUI.GarageManagerHandler
             r_Garage.AddVehicles(vehicle);
         }
 
-        private void addTruck(VehicleData i_VehicleData, string i_PlateNumber)
+        private void addTruck(VehicleDto.VehicleDtoBuilder i_VehicleDtoBuilder)
         {
+            int numberOfDoors = getNumberOfDoors();
+            float transportCapacity = getTransportCapacity();
+            bool isDangerous = getTruckDangerous();
 
+            i_VehicleDtoBuilder
+                .SetType("Truck")
+                .SetIsTransportDangerous(isDangerous)
+                .SetNumbersOfDoors(numberOfDoors)
+                .SetTransportCapacity(transportCapacity);
         }
 
-        private void addMotorcycle(VehicleData i_VehicleData, string i_PlateNumber)
+        private void addMotorcycle(VehicleDto.VehicleDtoBuilder i_VehicleDtoBuilder)
         {
+            string licenseType = getLicenseType();
+            int engineCapacity = getMotorcycleEngineCapacity();
 
+            i_VehicleDtoBuilder
+                .SetType("Motorcycle")
+                .SetLicenseType(licenseType)
+                .SetEngineCapacity(engineCapacity);
+        }
+
+        private string getLicenseType()
+        {
+            Console.WriteLine("Please enter the motorcycle license type: (A/A1/AA/B1)");
+            string licenseType = Console.ReadLine();
+
+            return licenseType;
+        }
+
+        private int getMotorcycleEngineCapacity()
+        {
+            int engineCapacity;
+
+            Console.WriteLine("Please enter engine capacity:");
+
+            while (!int.TryParse(Console.ReadLine(), out engineCapacity) || engineCapacity < 0)
+            {
+                Console.WriteLine("Invalid input. Please enter a valid positive number for engine capacity");
+            }
+
+            return engineCapacity;
+        }
+
+        private float getTransportCapacity()
+        {
+            float transportCapacity;
+
+            Console.WriteLine("Please enter if the truck transport capacity:");
+
+            while (!float.TryParse(Console.ReadLine(), out transportCapacity) || transportCapacity <= 0)
+            {
+                Console.WriteLine("Invalid input. Please enter a valid non negative number for transport capacity");
+            }
+
+            return transportCapacity;
+        }
+
+        private bool getTruckDangerous()
+        {
+            int isDangerous;
+
+            Console.WriteLine("Please enter if the truck transmit dangerous package: 1 - Yes | 0 - No");
+
+            while (!int.TryParse(Console.ReadLine(), out isDangerous) || isDangerous != 0 && isDangerous != 1)
+            {
+                Console.WriteLine("Invalid input. Please enter a valid number: 1 - Yes | 0 - No");
+            }
+
+            return isDangerous == 1;
         }
 
         private int getVehicleTypeFromUser()

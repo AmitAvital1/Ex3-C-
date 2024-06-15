@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Ex03.GarageLogic.Entities.Engine;
 using Ex03.GarageLogic.Entities.Vehicles.Car;
 using Ex03.GarageLogic.Entities.Wheels;
+using Ex03.GarageLogic.Factory.Dto;
 
 namespace Ex03.GarageLogic.Entities.Vehicles.Motorcycle
 {
@@ -67,9 +68,16 @@ namespace Ex03.GarageLogic.Entities.Vehicles.Motorcycle
                 return this;
             }
 
-            public MotorcycleBuilder SetWheels(IList<Wheel> i_Eheels)
+            public MotorcycleBuilder SetWheels(IList<WheelDto> i_WheelsDetails)
             {
-                m_Wheels = i_Eheels;
+                IList<Wheel> wheels = new List<Wheel>();
+
+                foreach (WheelDto wheel in i_WheelsDetails)
+                {
+                    wheels.Add(new Wheel(wheel.ManufacturerName, wheel.CurrentAirPressure, wheel.MaxAirPressure));
+                }
+
+                m_Wheels = wheels;
                 return this;
             }
 
