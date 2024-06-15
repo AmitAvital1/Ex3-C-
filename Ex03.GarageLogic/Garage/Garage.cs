@@ -1,8 +1,10 @@
 ﻿using Ex03.GarageLogic.Entities.Vehicles;
+using Ex03.GarageLogic.Entities.Wheels;
 using Ex03.GarageLogic.Factory;
 using Ex03.GarageLogic.Factory.Dto;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Ex03.GarageLogic.Garage
 {
@@ -59,10 +61,9 @@ namespace Ex03.GarageLogic.Garage
             foreach (var existingCar in m_Vehicles)
             {
                 string currentCarPlateNumber = existingCar.m_Vechile.GetPlateNumber();
+                
                 if ( currentCarPlateNumber.Equals(i_Car))
                 {
-                    // Car already exists, change its state to "Repair"
-                    existingCar.m_State = eState.Repair;
                     isCarExistInGarage = true;
                     break;
                 }
@@ -73,7 +74,64 @@ namespace Ex03.GarageLogic.Garage
 
         public IList<string> GetListOFVwhicleByFilter(string i_Filter)
         {
-            return null;
+            IList<string> filteredPlateNumbers = new List<string>();
+
+            eState filterState;
+
+            if (!Enum.TryParse<eState>(i_Filter, true, out filterState))
+            {
+                throw new ArgumentException($"Invalid filter option: {i_Filter}");
+            }
+
+            foreach (var vehicle in m_Vehicles)
+            {
+                if (vehicle.m_State == filterState)
+                {
+                    filteredPlateNumbers.Add(vehicle.m_Vechile.GetPlateNumber());
+                }
+            }
+
+            return filteredPlateNumbers;
+        }
+
+        public void ChangeVehicleState(string i_PlateNumber, eState i_NewState)
+        {
+            AddressCard vehicle = getVehicleByPlateNumber(i_PlateNumber);
+            vehicle.m_State = i_NewState;   
+        }
+
+        public void InflateWheelsToMax(string i_PlateNumber)
+        {
+            AddressCard vehicle = getVehicleByPlateNumber(i_PlateNumber);
+            IList<Wheel> wheels = vehicle.m_Vechile.GetWheels();
+
+            foreach (var wheel in wheels)
+            {
+                wheel.InflateWheelToMAx();
+            }
+        }
+
+        private AddressCard getVehicleByPlateNumber(string i_PlateNumber)
+        {
+            AddressCard vehicle = m_Vehicles
+                .FirstOrDefault(v => v.m_Vechile.GetPlateNumber().Equals(i_PlateNumber, StringComparison.OrdinalIgnoreCase));
+
+            if (vehicle == null)
+            {
+                throw new ArgumentException($"No vehicle with plate number {i_PlateNumber} found in the garage.");
+            }
+
+            return vehicle;
+        }
+
+        public bool FuelAmountExeesFromTheMax(string i_PlateNumber, float i_FuelAmount)
+        {
+            return true;
+        }
+
+        public void SetNewFuelAmount(string i_PlateNumber, float i_FuelAmount)
+        {
+
         }
     }
 }

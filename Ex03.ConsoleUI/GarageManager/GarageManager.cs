@@ -95,6 +95,8 @@ namespace Ex03.ConsoleUI.GarageManagerHandler
 
             if (r_Garage.CheckIfCarExistInGarage(plateNumber))
             {
+                eState newState = eState.Repair;
+                r_Garage.ChangeVehicleState(plateNumber, newState);
                 Console.WriteLine("The vehicles already exist in the Garage. we move to repair mode.");
             }
             else
@@ -117,6 +119,7 @@ namespace Ex03.ConsoleUI.GarageManagerHandler
             }
 
             Console.WriteLine($"Plate numbers for {filterOption} vehicles:");
+
             foreach (string plateNumber in vehiclePlateNumbers)
             {
                 Console.WriteLine(plateNumber);
@@ -125,17 +128,121 @@ namespace Ex03.ConsoleUI.GarageManagerHandler
 
         private void changeVehicleState()
         {
+            string plateNumber = getPlateNumberFromUser();
 
+            if (r_Garage.CheckIfCarExistInGarage(plateNumber))
+            {
+                Console.WriteLine("Please enter the new state of the vehicle (Repair, Repaired, Paid):");
+                string newStateInput = Console.ReadLine();
+
+                if (Enum.TryParse<eState>(newStateInput, true, out eState newState) && Enum.IsDefined(typeof(eState), newState))
+                {
+                    r_Garage.ChangeVehicleState(plateNumber, newState);
+                    Console.WriteLine($"The state of the vehicle with plate number {plateNumber} has been changed to {newState}.");
+                }
+                else
+                {
+                    Console.WriteLine("Invalid state. Please enter a valid state (Repair, Repaired, Paid).");
+                }
+            }
+            else
+            {
+                exceptionPlateNumberDoesNotExist(plateNumber);
+            }
+        }
+
+        private string getPlateNumberFromUser()
+        {
+            Console.WriteLine("Please enter the plate number of the vehicle:");
+            string plateNumber = Console.ReadLine();
+
+            return plateNumber;
         }
 
         private void inflateWheels()
         {
+            string plateNumber = getPlateNumberFromUser();
+            
+            if (r_Garage.CheckIfCarExistInGarage(plateNumber))
+            {
+                r_Garage.InflateWheelsToMax(plateNumber);
+            }
+            else
+            {
+                exceptionPlateNumberDoesNotExist(plateNumber);
+            }
+        }
 
+        private void exceptionPlateNumberDoesNotExist(string i_PlateNumber)
+        {
+            throw new InvalidOperationException($"Vehicle with plate number {i_PlateNumber} does not exist.");
         }
 
         private void refuelFuelDrivenVehicle()
         {
+            string plateNumber = getPlateNumberFromUser();
+            string fuelType = getFuelType();
 
+            float fuelAmount = getFuelAmount(plateNumber);
+
+            r_Garage.SetNewFuelAmount(plateNumber, fuelAmount);
+        }
+
+        private float getFuelAmount(string i_PlateNumber)
+        {
+            bool isValidFuelAmount = false;
+            float fuelAmount = 0;
+
+            while (!isValidFuelAmount)
+            {
+                Console.WriteLine("Please enter the amount of fuel to add:");
+                string input = Console.ReadLine();
+
+                if (float.TryParse(input, out fuelAmount))
+                {
+                    if (r_Garage.FuelAmountExeesFromTheMax(i_PlateNumber, fuelAmount))
+                    {
+                        isValidFuelAmount = true;   
+                    }
+                    else
+                    {
+                        Console.WriteLine("Fuel amount exceeds the maximum capacity. Please enter a valid amount.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid number.");
+                }
+            }
+
+            return fuelAmount;
+        }
+
+        private string getFuelType()
+        {
+            // need to check if the current fuel adapt to the current fuel
+            // need to check if the current car is an fuel car
+            string[] validFuelTypes = { "Soler", "Octan95", "Octan96", "Octan98" };
+            string fuelType = "";
+
+            Console.WriteLine("Please enter the type of fuel (Soler, Octan95, Octan96, Octan98):");
+           
+            while (true)
+            {
+                Console.WriteLine("Please enter the type of fuel (Soler, Octan95, Octan96, Octan98):");
+                fuelType = Console.ReadLine();
+
+                if (validFuelTypes.Contains(fuelType))
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid fuel type. Please enter a valid fuel type.");
+                }
+            }
+
+            return fuelType;
         }
 
         private void chargeElectricVehicle()

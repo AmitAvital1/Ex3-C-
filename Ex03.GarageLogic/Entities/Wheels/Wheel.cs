@@ -26,5 +26,10 @@ namespace Ex03.GarageLogic.Entities.Wheels
 
         //TODO
         public void InflateWheel(){}
+
+        public void InflateWheelToMAx()
+        {
+            m_CurrentAirPressure = m_MaxAirPressure;
+        }
     }
 }

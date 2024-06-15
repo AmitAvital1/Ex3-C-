@@ -34,5 +34,10 @@ namespace Ex03.GarageLogic.Entities.Vehicles
         {
             return r_PlateNumber;
         }
+
+        public IList<Wheel> GetWheels()
+        {
+            return m_Wheels;
+        }
     }
 }
