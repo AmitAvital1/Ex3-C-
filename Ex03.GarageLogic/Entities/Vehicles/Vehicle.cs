@@ -57,65 +57,21 @@ namespace Ex03.GarageLogic.Entities.Vehicles
             return r_Engine.GetFuelType();
         }
 
-        public bool IsCurrentVecileIsTypeOfSameEnergyEngine(float i_FuelAmount)
-        {
-            return checkIfCurrentVecileIsTypeOfSameEnergyEngine(r_Engine, i_FuelAmount);
-        }
-
-        private bool checkIfCurrentVecileIsTypeOfSameEnergyEngine<T>(T i_Engine, float i_EnergyAmount) where T : AbstractEngine
-        {
-            if (i_Engine is FuelEngine fuelEngine)
+        public bool IsCurrentVecileIsTypeOfSameEnergyEngine(float i_EnergyAmount)
+        {       
+            if (r_Engine.MaxEnergy() >= i_EnergyAmount)
             {
-                fuelEngine.AddEnergy(i_EnergyAmount);
-                
-                if (fuelEngine.MaxEnergy() >= i_EnergyAmount)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else if (i_Engine is ElectricEngine electricEngine)
-            {
-                i_Engine.AddEnergy(i_EnergyAmount);
-
-                if (electricEngine.MaxEnergy() >= i_EnergyAmount)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return true;
             }
             else
             {
-                isEngineNotAFuelEngine();
                 return false;
             }
         }
 
-        public void SetCurrentVehcile(float i_FuelAmount)
+        public void SetCurrentVehcile(float i_EnergyAmount)
         {
-            setCurrentVehcileGenerics(r_Engine, i_FuelAmount);
-        }
-
-        private void setCurrentVehcileGenerics<T>(T i_Engine, float i_EnergyAmount) where T : AbstractEngine
-        {
-            if (i_Engine is FuelEngine fuelEngine)
-            {
-                fuelEngine.AddEnergy(i_EnergyAmount);
-            }
-            else if (i_Engine is ElectricEngine electricEngine)
-            {
-                i_Engine.AddEnergy(i_EnergyAmount);
-            }
-            else
-            {
-                isEngineNotAFuelEngine();
-            }
+            r_Engine.AddEnergy(i_EnergyAmount);
         }
 
         public void IsFuelDrive()
