@@ -21,21 +21,30 @@ namespace Ex03.GarageLogic.Factory
                     return new Motorcycle.MotorcycleBuilder()
                         .SetLicenseType(i_VehicleDto.LicenseType)
                         .SetEngineCapacity(i_VehicleDto.EngineCapacity) 
-                        .SetEngine(new ElectricEngine(i_VehicleDto.CurrentEnergy, i_VehicleDto.CapacityEnergy)) 
+                        .SetEngine(new ElectricEngine(i_VehicleDto.CurrentEnergy, i_VehicleDto.CapacityEnergy))
+                        .SetModelName(i_VehicleDto.ModelName)
+                        .SetPlateNumber(i_VehicleDto.PlateNumber)
+                        .SetWheels(i_VehicleDto.WheelsData)
                         .Build();
 
                 case eVehicleType.FuelMotorcycle:
                     return new Motorcycle.MotorcycleBuilder()
                         .SetLicenseType(i_VehicleDto.LicenseType)
                         .SetEngineCapacity(i_VehicleDto.EngineCapacity) 
-                        .SetEngine(new FuelEngine(i_VehicleDto.CurrentEnergy, i_VehicleDto.CapacityEnergy, i_VehicleDto.FuelType)) 
+                        .SetEngine(new FuelEngine(i_VehicleDto.CurrentEnergy, i_VehicleDto.CapacityEnergy, i_VehicleDto.FuelType))
+                        .SetModelName(i_VehicleDto.ModelName)
+                        .SetPlateNumber(i_VehicleDto.PlateNumber)
+                        .SetWheels(i_VehicleDto.WheelsData)
                         .Build();
 
                 case eVehicleType.ElectricCar:
                     return new Car.CarBuilder()
                         .SetColor(i_VehicleDto.Color)
                         .SetNumOfDoors(i_VehicleDto.NumberOfDoors)
-                        .SetEngine(new ElectricEngine(i_VehicleDto.CurrentEnergy, i_VehicleDto.CapacityEnergy)) 
+                        .SetEngine(new ElectricEngine(i_VehicleDto.CurrentEnergy, i_VehicleDto.CapacityEnergy))
+                        .SetModelName(i_VehicleDto.ModelName)
+                        .SetPlateNumber(i_VehicleDto.PlateNumber)
+                        .SetWheels(i_VehicleDto.WheelsData)
                         .Build();
 
                 case eVehicleType.FuelCar:
@@ -52,14 +61,20 @@ namespace Ex03.GarageLogic.Factory
                     return new Truck.TruckBuilder()
                         .SetIsTransportDangerous(i_VehicleDto.IsTransportDangerous) 
                         .SetTransportCapacity(i_VehicleDto.TransportCapacity) 
-                        .SetEngine(new ElectricEngine(i_VehicleDto.CurrentEnergy, i_VehicleDto.CapacityEnergy)) 
+                        .SetEngine(new ElectricEngine(i_VehicleDto.CurrentEnergy, i_VehicleDto.CapacityEnergy))
+                        .SetModelName(i_VehicleDto.ModelName)
+                        .SetPlateNumber(i_VehicleDto.PlateNumber)
+                        .SetWheels(i_VehicleDto.WheelsData)
                         .Build();
 
                 case eVehicleType.FuelTruck:
                     return new Truck.TruckBuilder()
                         .SetIsTransportDangerous(i_VehicleDto.IsTransportDangerous) 
                         .SetTransportCapacity(i_VehicleDto.TransportCapacity) 
-                        .SetEngine(new FuelEngine(i_VehicleDto.CurrentEnergy, i_VehicleDto.CapacityEnergy, i_VehicleDto.FuelType)) 
+                        .SetEngine(new FuelEngine(i_VehicleDto.CurrentEnergy, i_VehicleDto.CapacityEnergy, i_VehicleDto.FuelType))
+                        .SetModelName(i_VehicleDto.ModelName)
+                        .SetPlateNumber(i_VehicleDto.PlateNumber)
+                        .SetWheels(i_VehicleDto.WheelsData)
                         .Build();
 
                 default:

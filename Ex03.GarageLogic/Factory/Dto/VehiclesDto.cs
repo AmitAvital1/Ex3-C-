@@ -24,6 +24,7 @@ namespace Ex03.GarageLogic.Factory.Dto
         public IList<WheelDto> WheelsData { get; set; }
         public string OwnerName { get; set; }
         public string OwnerPhone { get; set; }
+        public bool DangerousPack { get; set; }
 
         public class VehicleDtoBuilder
         {
@@ -158,7 +159,7 @@ namespace Ex03.GarageLogic.Factory.Dto
                     PlateNumber = this.m_PlateNumber,
                     WheelsData = this.m_WheelsData,
                     OwnerName = this.m_OwnerName,
-                    OwnerPhone = this.m_OwnerPhone
+                    OwnerPhone = this.m_OwnerPhone,
                 };
             }
         }

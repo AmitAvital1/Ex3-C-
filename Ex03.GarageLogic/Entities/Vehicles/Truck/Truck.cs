@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Ex03.GarageLogic.Entities.Engine;
 using Ex03.GarageLogic.Entities.Wheels;
+using Ex03.GarageLogic.Factory.Dto;
 
 namespace Ex03.GarageLogic.Entities.Vehicles
 {
@@ -17,6 +18,11 @@ namespace Ex03.GarageLogic.Entities.Vehicles
             string i_ModelName, string i_PlateNumber, IList<Wheel> i_Wheels)
             : base(i_Engine, i_ModelName, i_PlateNumber, i_Wheels)
         {
+            if (m_TransportCapacity < 0)
+            {
+                throw new FormatException("Transport capacity invalid.");
+            }
+
             m_IsTransportDangerous = i_IsTransportDangerous;
             m_TransportCapacity = i_TransportCapacity;
         }
@@ -60,9 +66,16 @@ namespace Ex03.GarageLogic.Entities.Vehicles
                 return this;
             }
 
-            public TruckBuilder SetWheels(IList<Wheel> i_Wheels)
+            public TruckBuilder SetWheels(IList<WheelDto> i_WheelsDetails)
             {
-                m_Wheels = i_Wheels;
+                IList<Wheel> wheels = new List<Wheel>();
+
+                foreach (WheelDto wheel in i_WheelsDetails)
+                {
+                    wheels.Add(new Wheel(wheel.ManufacturerName, wheel.CurrentAirPressure, wheel.MaxAirPressure));
+                }
+
+                m_Wheels = wheels;
                 return this;
             }
 
