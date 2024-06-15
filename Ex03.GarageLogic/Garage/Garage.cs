@@ -1,4 +1,5 @@
-﻿using Ex03.GarageLogic.Entities.Vehicles;
+﻿using Ex03.GarageLogic.Entities.Engine;
+using Ex03.GarageLogic.Entities.Vehicles;
 using Ex03.GarageLogic.Entities.Wheels;
 using Ex03.GarageLogic.Factory;
 using Ex03.GarageLogic.Factory.Dto;
@@ -126,12 +127,54 @@ namespace Ex03.GarageLogic.Garage
 
         public bool FuelAmountExeesFromTheMax(string i_PlateNumber, float i_FuelAmount)
         {
-            return true;
+            AddressCard vehicle = getVehicleByPlateNumber(i_PlateNumber);
+            
+            return vehicle.m_Vechile.IsCurrentVecileIsTypeOfSameEnergyEngine(i_FuelAmount);
         }
 
-        public void SetNewFuelAmount(string i_PlateNumber, float i_FuelAmount)
+        public void SetNewEnergyAmount(string i_PlateNumber, float i_FuelAmount)
         {
+            AddressCard vehicle = getVehicleByPlateNumber(i_PlateNumber);
+            vehicle.m_Vechile.SetCurrentVehcile(i_FuelAmount);
+        }
 
+        public void IsFuelDrive(string i_PlateNumber)
+        {
+            AddressCard vehicle = getVehicleByPlateNumber(i_PlateNumber);
+            vehicle.m_Vechile.IsFuelDrive();
+        }
+
+        public void IsElectricDrive(string i_PlateNumber)
+        {
+            AddressCard vehicle = getVehicleByPlateNumber(i_PlateNumber);
+            vehicle.m_Vechile.IsElectricDrive();
+        }
+
+        public bool SameFuelInTheCurrentTank(string i_PlateNumber, string i_FuelType)
+        {
+            AddressCard vehicle = getVehicleByPlateNumber(i_PlateNumber);
+            eEngineType engineType = getEngineType(i_FuelType);
+            
+            if (vehicle.m_Vechile.GetFuelType() == engineType)
+            {
+                return true;
+            }
+            else
+            {
+                throw new InvalidOperationException("Fuel type does not match.");
+            }
+        }
+
+        private eEngineType getEngineType(string i_FuelType)
+        {
+            if (Enum.TryParse<eEngineType>(i_FuelType, true, out eEngineType fuelType))
+            {
+                return fuelType;
+            }
+            else
+            {
+                throw new ArgumentException("Invalid fuel type specified.");
+            }
         }
     }
 }

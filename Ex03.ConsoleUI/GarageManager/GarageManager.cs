@@ -181,11 +181,11 @@ namespace Ex03.ConsoleUI.GarageManagerHandler
         private void refuelFuelDrivenVehicle()
         {
             string plateNumber = getPlateNumberFromUser();
-            string fuelType = getFuelType();
-
+            isFuelDrive(plateNumber);
+            getFuelType(plateNumber);
             float fuelAmount = getFuelAmount(plateNumber);
 
-            r_Garage.SetNewFuelAmount(plateNumber, fuelAmount);
+            r_Garage.SetNewEnergyAmount(plateNumber, fuelAmount);
         }
 
         private float getFuelAmount(string i_PlateNumber)
@@ -218,10 +218,8 @@ namespace Ex03.ConsoleUI.GarageManagerHandler
             return fuelAmount;
         }
 
-        private string getFuelType()
+        private void getFuelType(string i_PlateNumber)
         {
-            // need to check if the current fuel adapt to the current fuel
-            // need to check if the current car is an fuel car
             string[] validFuelTypes = { "Soler", "Octan95", "Octan96", "Octan98" };
             string fuelType = "";
 
@@ -234,25 +232,48 @@ namespace Ex03.ConsoleUI.GarageManagerHandler
 
                 if (validFuelTypes.Contains(fuelType))
                 {
-                    break;
+                    if (r_Garage.SameFuelInTheCurrentTank(i_PlateNumber, fuelType))
+                    {
+                        break;
+                    }
+           
                 }
                 else
                 {
                     Console.WriteLine("Invalid fuel type. Please enter a valid fuel type.");
                 }
             }
-
-            return fuelType;
         }
 
         private void chargeElectricVehicle()
         {
+            string plateNumber = getPlateNumberFromUser();
+            isElectricDrive(plateNumber);
+            float minuteAmount = getMinuteAmountOfCharge(plateNumber);
 
+            r_Garage.SetNewEnergyAmount(plateNumber, minuteAmount);
+        }
+
+        private float getMinuteAmountOfCharge(string plateNumber)
+        {
+            Console.WriteLine("Please enter the number of times you want to charge the car:");
+            float chargeAmount = float.Parse(Console.ReadLine());
+            return chargeAmount;
+        }
+
+        private void isElectricDrive(string i_PlateNumber)
+        {
+            r_Garage.IsElectricDrive(i_PlateNumber);
         }
 
         private void viewFullVehicleDetails()
         {
 
+        }
+
+        private void isFuelDrive(string i_PlateNumber)
+        {
+            r_Garage.IsFuelDrive(i_PlateNumber);
         }
 
         private void getDetailsAboutVehicle(string i_PlateNumber)

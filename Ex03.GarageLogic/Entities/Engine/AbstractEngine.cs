@@ -10,7 +10,14 @@
         }
 
         public abstract float Energy();
+        
         public abstract float MaxEnergy();
+        
         public abstract void AddEnergy(float i_EnergyUnit);
+        
+        public eEngineType GetFuelType()
+        {
+            return m_FuelType;
+        }
     }
 }

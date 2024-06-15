@@ -39,5 +39,101 @@ namespace Ex03.GarageLogic.Entities.Vehicles
         {
             return m_Wheels;
         }
+
+        public eEngineType GetFuelType()
+        {
+            return r_Engine.GetFuelType();
+        }
+
+        public bool IsCurrentVecileIsTypeOfSameEnergyEngine(float i_FuelAmount)
+        {
+            return checkIfCurrentVecileIsTypeOfSameEnergyEngine(r_Engine, i_FuelAmount);
+        }
+
+        private bool checkIfCurrentVecileIsTypeOfSameEnergyEngine<T>(T i_Engine, float i_EnergyAmount) where T : AbstractEngine
+        {
+            if (i_Engine is FuelEngine fuelEngine)
+            {
+                fuelEngine.AddEnergy(i_EnergyAmount);
+                
+                if (fuelEngine.MaxEnergy() >= i_EnergyAmount)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else if (i_Engine is ElectricEngine electricEngine)
+            {
+                i_Engine.AddEnergy(i_EnergyAmount);
+
+                if (electricEngine.MaxEnergy() >= i_EnergyAmount)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                isEngineNotAFuelEngine();
+                return false;
+            }
+        }
+
+        public void SetCurrentVehcile(float i_FuelAmount)
+        {
+            setCurrentVehcileGenerics(r_Engine, i_FuelAmount);
+        }
+
+        private void setCurrentVehcileGenerics<T>(T i_Engine, float i_EnergyAmount) where T : AbstractEngine
+        {
+            if (i_Engine is FuelEngine fuelEngine)
+            {
+                fuelEngine.AddEnergy(i_EnergyAmount);
+            }
+            else if (i_Engine is ElectricEngine electricEngine)
+            {
+                i_Engine.AddEnergy(i_EnergyAmount);
+            }
+            else
+            {
+                isEngineNotAFuelEngine();
+            }
+        }
+
+        public void IsFuelDrive()
+        {
+            FuelEngine fuelEngine = r_Engine as FuelEngine;
+
+            if (fuelEngine == null)
+            {
+                isEngineNotAFuelEngine();
+            }
+        }
+
+        public void IsElectricDrive()
+        {
+            ElectricEngine electricEngine = r_Engine as ElectricEngine;
+
+            if (electricEngine == null)
+            {
+                isEngineNotAElectricEngine();
+            }
+        }
+
+        private void isEngineNotAFuelEngine()
+        {
+            throw new InvalidOperationException("Vehicle engine is not a FuelEngine.");
+        }
+
+        private void isEngineNotAElectricEngine()
+        {
+            throw new InvalidOperationException("Vehicle engine is not a ElectricEngine.");
+        }
     }
 }
