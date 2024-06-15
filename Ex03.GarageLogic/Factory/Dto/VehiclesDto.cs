@@ -25,6 +25,7 @@ namespace Ex03.GarageLogic.Factory.Dto
         public string OwnerName { get; set; }
         public string OwnerPhone { get; set; }
         public bool DangerousPack { get; set; }
+        public string StatusInGarage { get; set; }
 
         public class VehicleDtoBuilder
         {
@@ -44,6 +45,7 @@ namespace Ex03.GarageLogic.Factory.Dto
             private IList<WheelDto> m_WheelsData;
             private string m_OwnerName;
             private string m_OwnerPhone;
+            private string m_StatusInGarage;
 
             public VehicleDtoBuilder SetCurrentEnergy(float i_CurrentEnergy)
             {
@@ -140,6 +142,12 @@ namespace Ex03.GarageLogic.Factory.Dto
                 return this;
             }
 
+            public VehicleDtoBuilder SetStatusInGarage(string  i_StatusInGarage) 
+            { 
+                this.m_StatusInGarage = i_StatusInGarage;
+                return this;
+            }
+
             public VehicleDto Build()
             {
                 return new VehicleDto
@@ -160,6 +168,7 @@ namespace Ex03.GarageLogic.Factory.Dto
                     WheelsData = this.m_WheelsData,
                     OwnerName = this.m_OwnerName,
                     OwnerPhone = this.m_OwnerPhone,
+                    StatusInGarage = this.m_StatusInGarage
                 };
             }
         }

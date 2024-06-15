@@ -9,7 +9,7 @@ using Ex03.GarageLogic.Entities.Wheels;
 using Ex03.GarageLogic.Factory.Dto;
 using Ex03.GarageLogic.Garage;
 
-namespace Ex03.GarageLogic.Entities.Vehicles.Car
+namespace Ex03.GarageLogic.Entities.Vehicles.CarHandler
 {
     public class Car : Vehicle
     {
@@ -31,6 +31,16 @@ namespace Ex03.GarageLogic.Entities.Vehicles.Car
             {
                 throw new FormatException($"Num of doors '{i_NumOfDoors}' invalid.");
             }
+        }
+
+        public string GetColor()
+        {
+           return m_Color.ToString();
+        }
+
+        public string GetNumberOfDoors()
+        {
+            return m_NumOfDoors.ToString();
         }
 
         public class CarBuilder

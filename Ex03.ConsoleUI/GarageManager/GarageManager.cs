@@ -1,6 +1,4 @@
 ﻿using Ex03.GarageLogic.Entities.Engine;
-using Ex03.GarageLogic.Entities.Vehicles.Motorcycle;
-using Ex03.GarageLogic.Entities.Vehicles;
 using Ex03.GarageLogic.Garage;
 using System;
 using System.Collections;
@@ -268,7 +266,62 @@ namespace Ex03.ConsoleUI.GarageManagerHandler
 
         private void viewFullVehicleDetails()
         {
+            string plateNumber = getPlateNumberFromUser();
+            (VehicleDto vehicleDto, string typeOfVehicle) = r_Garage.GetDataByPlateNumber(plateNumber);
 
+            displayCommonVehicleDetails(vehicleDto);
+
+            switch (typeOfVehicle)
+            {
+                case "car":
+                    displayCarDetails(vehicleDto);
+                    break;
+                case "motorcycle":
+                    displayMotorcycleDetails(vehicleDto);
+                    break;
+                case "truck":
+                    displayTruckDetails(vehicleDto);
+                    break;
+                default:
+                    Console.WriteLine("Unknown vehicle type.");
+                    break;
+            }
+        }
+
+        private void displayCommonVehicleDetails(VehicleDto vehicleDto)
+        {
+            Console.WriteLine($"Plate Number: {vehicleDto.PlateNumber}");
+            Console.WriteLine($"Owner Name: {vehicleDto.OwnerName}");
+            Console.WriteLine($"Owner Phone: {vehicleDto.OwnerPhone}");
+            Console.WriteLine($"Model Name: {vehicleDto.ModelName}");
+            Console.WriteLine($"Wheels Data:");
+
+            foreach (var wheel in vehicleDto.WheelsData)
+            {
+                Console.WriteLine($"  Manufacturer: {wheel.ManufacturerName}, Max Air Pressure: {wheel.MaxAirPressure}, Current Air Pressure: {wheel.CurrentAirPressure}");
+            }
+
+            Console.WriteLine($"Fuel Type: {vehicleDto.FuelType}");
+            Console.WriteLine($"Status in Garage: {vehicleDto.StatusInGarage}");
+
+        }
+
+        private void displayCarDetails(VehicleDto vehicleDto)
+        {
+            Console.WriteLine($"Color: {vehicleDto.Color}");
+            Console.WriteLine($"Number of Doors: {vehicleDto.NumberOfDoors}");
+        }
+
+        private void displayMotorcycleDetails(VehicleDto vehicleDto)
+        {
+            Console.WriteLine($"License Type: {vehicleDto.LicenseType}");
+            Console.WriteLine($"Engine Capacity: {vehicleDto.EngineCapacity}");
+        }
+
+        private void displayTruckDetails(VehicleDto vehicleDto)
+        {
+            Console.WriteLine($"Is Transport Dangerous: {vehicleDto.IsTransportDangerous}");
+            Console.WriteLine($"Transport Capacity: {vehicleDto.TransportCapacity}");
         }
 
         private void isFuelDrive(string i_PlateNumber)

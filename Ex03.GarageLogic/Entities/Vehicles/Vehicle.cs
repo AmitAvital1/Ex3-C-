@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Ex03.GarageLogic.Entities.Engine;
 using Ex03.GarageLogic.Entities.Wheels;
+using Ex03.GarageLogic.Entities.Vehicles.CarHandler;
+using Ex03.GarageLogic.Entities.Vehicles.MotorcycleHandler;
 
 namespace Ex03.GarageLogic.Entities.Vehicles
 {
@@ -38,6 +40,16 @@ namespace Ex03.GarageLogic.Entities.Vehicles
         public IList<Wheel> GetWheels()
         {
             return m_Wheels;
+        }
+
+        public bool IsCar()
+        {
+            return this is Car;
+        }
+
+        public bool IsMotorcycle()
+        {
+            return this is Motorcycle;
         }
 
         public eEngineType GetFuelType()

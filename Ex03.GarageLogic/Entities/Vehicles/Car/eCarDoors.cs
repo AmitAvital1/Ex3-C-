@@ -1,4 +1,4 @@
-﻿namespace Ex03.GarageLogic.Entities.Vehicles.Car
+﻿namespace Ex03.GarageLogic.Entities.Vehicles.CarHandler
 {
     public enum eCarDoors
     {

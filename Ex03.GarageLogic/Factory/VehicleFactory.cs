@@ -1,7 +1,7 @@
 ﻿using Ex03.GarageLogic.Entities.Engine;
 using Ex03.GarageLogic.Entities.Vehicles;
-using Ex03.GarageLogic.Entities.Vehicles.Car;
-using Ex03.GarageLogic.Entities.Vehicles.Motorcycle;
+using Ex03.GarageLogic.Entities.Vehicles.CarHandler;
+using Ex03.GarageLogic.Entities.Vehicles.MotorcycleHandler;
 using Ex03.GarageLogic.Factory.Dto;
 using System;
 using System.Collections.Generic;

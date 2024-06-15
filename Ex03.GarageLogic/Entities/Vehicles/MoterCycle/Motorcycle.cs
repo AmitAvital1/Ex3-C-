@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Ex03.GarageLogic.Entities.Engine;
-using Ex03.GarageLogic.Entities.Vehicles.Car;
+using Ex03.GarageLogic.Entities.Vehicles.CarHandler;
 using Ex03.GarageLogic.Entities.Wheels;
 using Ex03.GarageLogic.Factory.Dto;
 using Ex03.GarageLogic.Garage;
 
-namespace Ex03.GarageLogic.Entities.Vehicles.Motorcycle
+namespace Ex03.GarageLogic.Entities.Vehicles.MotorcycleHandler
 {
     public class Motorcycle : Vehicle
     {
@@ -28,6 +28,16 @@ namespace Ex03.GarageLogic.Entities.Vehicles.Motorcycle
             }
 
             m_EngineCapacity = i_EngineCapacity;
+        }
+
+        public string GetLicenseType()
+        {
+            return m_LicenseType.ToString();
+        }
+
+        public int GetEngineCapacity()
+        {
+            return m_EngineCapacity;
         }
 
         public class MotorcycleBuilder

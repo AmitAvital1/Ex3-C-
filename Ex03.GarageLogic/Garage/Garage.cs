@@ -1,5 +1,7 @@
 ﻿using Ex03.GarageLogic.Entities.Engine;
 using Ex03.GarageLogic.Entities.Vehicles;
+using Ex03.GarageLogic.Entities.Vehicles.CarHandler;
+using Ex03.GarageLogic.Entities.Vehicles.MotorcycleHandler;
 using Ex03.GarageLogic.Entities.Wheels;
 using Ex03.GarageLogic.Factory;
 using Ex03.GarageLogic.Factory.Dto;
@@ -175,6 +177,67 @@ namespace Ex03.GarageLogic.Garage
             {
                 throw new ArgumentException("Invalid fuel type specified.");
             }
+        }
+
+        public (VehicleDto,string) GetDataByPlateNumber(string i_PlateNumber)
+        {
+            string type = "";
+            AddressCard addressCard = getVehicleByPlateNumber(i_PlateNumber);
+
+            var vehicleDto = new VehicleDto.VehicleDtoBuilder()
+                    .SetPlateNumber(i_PlateNumber)
+                    .SetOwnerName(addressCard.m_OwnerPhone)
+                    .SetOwnerPhone(addressCard.m_OwnerPhone)
+                    .SetModelName(addressCard.m_Vechile.GetModelName())
+                    .SetWheelsData(convertWheelsToDto(addressCard.m_Vechile.GetWheels()))
+                    .SetFuelType(addressCard.m_Vechile.GetFuelType().ToString())
+                    .SetStatusInGarage(addressCard.m_State.ToString());
+            
+            if (addressCard.m_Vechile.IsCar())
+            {
+                Car car = addressCard.m_Vechile as Car;
+                type = "car";
+                vehicleDto
+                    .SetColor(car.GetColor())
+                    .SetNumbersOfDoors(int.Parse(car.GetNumberOfDoors()));
+
+            }
+            else if (addressCard.m_Vechile.IsMotorcycle())
+            {
+                Motorcycle motorcycle = addressCard.m_Vechile as Motorcycle;
+                type = "motorcycle";
+                vehicleDto
+                    .SetLicenseType(motorcycle.GetLicenseType())
+                    .SetEngineCapacity(motorcycle.GetEngineCapacity());
+            }
+            else
+            {
+                Truck truck = addressCard.m_Vechile as Truck;
+                type = "truck";
+                vehicleDto
+                    .SetIsTransportDangerous(truck.IsTransportDangerous())
+                    .SetTransportCapacity(truck.TransportCapacity());
+            }
+
+            return (vehicleDto.Build(), type);
+        }
+
+        private IList<WheelDto> convertWheelsToDto(IList<Wheel> wheels)
+        {
+            IList<WheelDto> wheelDtos = new List<WheelDto>();
+
+            foreach (var wheel in wheels)
+            {
+                WheelDto wheelDto = new WheelDto
+                {
+                    ManufacturerName = wheel.GetManufacturerName(),
+                    MaxAirPressure = wheel.GetMaxAirPressure(),
+                    CurrentAirPressure = wheel.GetCurrentAirPressure()
+                };
+                wheelDtos.Add(wheelDto);
+            }
+
+            return wheelDtos;
         }
     }
 }

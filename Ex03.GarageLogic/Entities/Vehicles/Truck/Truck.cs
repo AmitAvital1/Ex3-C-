@@ -28,6 +28,16 @@ namespace Ex03.GarageLogic.Entities.Vehicles
             m_TransportCapacity = i_TransportCapacity;
         }
 
+        public bool IsTransportDangerous()
+        {
+            return m_IsTransportDangerous;
+        }
+
+        public float TransportCapacity()
+        {
+            return m_TransportCapacity;
+        }
+
         public class TruckBuilder
         {
             private bool m_IsTransportDangerous;

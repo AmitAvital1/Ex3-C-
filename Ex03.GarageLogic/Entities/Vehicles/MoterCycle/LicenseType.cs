@@ -1,4 +1,4 @@
-﻿namespace Ex03.GarageLogic.Entities.Vehicles.Motorcycle
+﻿namespace Ex03.GarageLogic.Entities.Vehicles.MotorcycleHandler
 {
     public enum eLicenseType
     {
