@@ -6,15 +6,15 @@ namespace Ex03.GarageLogic.Entities.Engine
     {
         private float m_CurrentElectricy;
         private readonly float r_MaxElectricy; //In Hours
-
-        public ElectricEngine(float i_CurrentElectricy, float i_MaxElectricy)
+        
+        public ElectricEngine(eEngineType i_FuelType, float i_CurrentElectricy, float i_MaxElectricy) : base(i_FuelType)
         {
             if (i_MaxElectricy < 0)
             {
                 throw new ArgumentException($"Max Electricy '{i_MaxElectricy}' invalid.");
             }
 
-            if (i_CurrentElectricy < 0)
+            if (i_CurrentElectricy < 0 || i_CurrentElectricy > i_MaxElectricy)
             {
                 throw new ArgumentException($"Current Electricy '{i_CurrentElectricy}' invalid.");
             }

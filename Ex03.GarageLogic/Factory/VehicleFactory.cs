@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ex03.GarageLogic.Garage;
 
 namespace Ex03.GarageLogic.Factory
 {
@@ -21,7 +22,7 @@ namespace Ex03.GarageLogic.Factory
                     return new Motorcycle.MotorcycleBuilder()
                         .SetLicenseType(i_VehicleDto.LicenseType)
                         .SetEngineCapacity(i_VehicleDto.EngineCapacity) 
-                        .SetEngine(new ElectricEngine(i_VehicleDto.CurrentEnergy, i_VehicleDto.CapacityEnergy))
+                        .SetEngine(new ElectricEngine(eEngineType.Electricy,i_VehicleDto.CurrentEnergy, Constants.sr_ElectricEngineMotorcycleMaxCapacity))
                         .SetModelName(i_VehicleDto.ModelName)
                         .SetPlateNumber(i_VehicleDto.PlateNumber)
                         .SetWheels(i_VehicleDto.WheelsData)
@@ -31,7 +32,7 @@ namespace Ex03.GarageLogic.Factory
                     return new Motorcycle.MotorcycleBuilder()
                         .SetLicenseType(i_VehicleDto.LicenseType)
                         .SetEngineCapacity(i_VehicleDto.EngineCapacity) 
-                        .SetEngine(new FuelEngine(i_VehicleDto.CurrentEnergy, i_VehicleDto.CapacityEnergy, i_VehicleDto.FuelType))
+                        .SetEngine(new FuelEngine(eEngineType.Octan98,i_VehicleDto.CurrentEnergy, Constants.sr_FuelEngineMotorcycleMaxCapacity))
                         .SetModelName(i_VehicleDto.ModelName)
                         .SetPlateNumber(i_VehicleDto.PlateNumber)
                         .SetWheels(i_VehicleDto.WheelsData)
@@ -41,7 +42,7 @@ namespace Ex03.GarageLogic.Factory
                     return new Car.CarBuilder()
                         .SetColor(i_VehicleDto.Color)
                         .SetNumOfDoors(i_VehicleDto.NumberOfDoors)
-                        .SetEngine(new ElectricEngine(i_VehicleDto.CurrentEnergy, i_VehicleDto.CapacityEnergy))
+                        .SetEngine(new ElectricEngine(eEngineType.Electricy, i_VehicleDto.CurrentEnergy, Constants.sr_ElectricEngineCarMaxCapacity))
                         .SetModelName(i_VehicleDto.ModelName)
                         .SetPlateNumber(i_VehicleDto.PlateNumber)
                         .SetWheels(i_VehicleDto.WheelsData)
@@ -51,17 +52,7 @@ namespace Ex03.GarageLogic.Factory
                     return new Car.CarBuilder()
                         .SetColor(i_VehicleDto.Color)
                         .SetNumOfDoors(i_VehicleDto.NumberOfDoors) 
-                        .SetEngine(new FuelEngine(i_VehicleDto.CurrentEnergy, i_VehicleDto.CapacityEnergy, i_VehicleDto.FuelType)) 
-                        .SetModelName(i_VehicleDto.ModelName)
-                        .SetPlateNumber(i_VehicleDto.PlateNumber)
-                        .SetWheels(i_VehicleDto.WheelsData)
-                        .Build();
-
-                case eVehicleType.ElectricTruck:
-                    return new Truck.TruckBuilder()
-                        .SetIsTransportDangerous(i_VehicleDto.IsTransportDangerous) 
-                        .SetTransportCapacity(i_VehicleDto.TransportCapacity) 
-                        .SetEngine(new ElectricEngine(i_VehicleDto.CurrentEnergy, i_VehicleDto.CapacityEnergy))
+                        .SetEngine(new FuelEngine(eEngineType.Octan95, i_VehicleDto.CurrentEnergy, Constants.sr_FuelEngineCarMaxCapacity)) 
                         .SetModelName(i_VehicleDto.ModelName)
                         .SetPlateNumber(i_VehicleDto.PlateNumber)
                         .SetWheels(i_VehicleDto.WheelsData)
@@ -71,7 +62,7 @@ namespace Ex03.GarageLogic.Factory
                     return new Truck.TruckBuilder()
                         .SetIsTransportDangerous(i_VehicleDto.IsTransportDangerous) 
                         .SetTransportCapacity(i_VehicleDto.TransportCapacity) 
-                        .SetEngine(new FuelEngine(i_VehicleDto.CurrentEnergy, i_VehicleDto.CapacityEnergy, i_VehicleDto.FuelType))
+                        .SetEngine(new FuelEngine(eEngineType.Soler, i_VehicleDto.CurrentEnergy, Constants.sr_FuelEngineTruckMaxCapacity))
                         .SetModelName(i_VehicleDto.ModelName)
                         .SetPlateNumber(i_VehicleDto.PlateNumber)
                         .SetWheels(i_VehicleDto.WheelsData)

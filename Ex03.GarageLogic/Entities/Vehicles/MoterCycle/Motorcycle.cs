@@ -7,6 +7,7 @@ using Ex03.GarageLogic.Entities.Engine;
 using Ex03.GarageLogic.Entities.Vehicles.Car;
 using Ex03.GarageLogic.Entities.Wheels;
 using Ex03.GarageLogic.Factory.Dto;
+using Ex03.GarageLogic.Garage;
 
 namespace Ex03.GarageLogic.Entities.Vehicles.Motorcycle
 {
@@ -74,7 +75,7 @@ namespace Ex03.GarageLogic.Entities.Vehicles.Motorcycle
 
                 foreach (WheelDto wheel in i_WheelsDetails)
                 {
-                    wheels.Add(new Wheel(wheel.ManufacturerName, wheel.CurrentAirPressure, wheel.MaxAirPressure));
+                    wheels.Add(new Wheel(wheel.ManufacturerName, wheel.CurrentAirPressure, Constants.sr_MotorcycleMaxWheelsPressure));
                 }
 
                 m_Wheels = wheels;
