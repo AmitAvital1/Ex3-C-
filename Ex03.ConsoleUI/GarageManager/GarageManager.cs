@@ -157,22 +157,19 @@ namespace Ex03.ConsoleUI.GarageManagerHandler
             (float energyMaxTank, float energyStatus) = getEnergyStatusOfTheCurrentVehicle(isFuel);
             IList<WheelDto> wheelsData = getNumberOfAirInWheels();
 
-            VehicleData vehicleData = new VehicleData
-            {
-                ModelName = modelName,
-                VehicleType = vehicleType,
-                IsFuel = isFuel,
-                EnergyMaxTank = energyMaxTank,
-                EnergyStatus = energyStatus,
-                WheelsData = wheelsData,
-                OwnerName = ownerName,
-                OwnerPhone = ownerPhone
-            };
+            var vehicleDtoBuilder = new VehicleDto.VehicleDtoBuilder()
+                .SetPlateNumber(i_PlateNumber)
+                .SetModelName(modelName)
+                .SetCapacityEnergy(energyMaxTank)
+                .SetCurrentEnergy(energyStatus)
+                .SetWheelsData(wheelsData)
+                .SetOwnerName(ownerName)
+                .SetOwnerPhone(ownerPhone);
 
             switch (vehicleType)
             {
                 case 1:
-                    addCar(vehicleData, i_PlateNumber);
+                    addCar(vehicleDtoBuilder);
                     break;
                 case 2:
                     addTruck(vehicleData, i_PlateNumber);
@@ -185,6 +182,20 @@ namespace Ex03.ConsoleUI.GarageManagerHandler
                     getDetailsAboutVehicle(i_PlateNumber);
                     break;
             }
+
+            if (isFuel)
+            {
+                vehicleDtoBuilder.SetEngineType("Fuel")
+                    .SetFuelType(getEngineType());
+            }
+            else
+            {
+                vehicleDtoBuilder.SetEngineType("Electricy")
+                    .SetFuelType("Electricy");
+            }
+
+            VehicleDto vehicle = vehicleDtoBuilder.Build();
+            r_Garage.AddVehicles(vehicle);
         }
 
         private void addTruck(VehicleData i_VehicleData, string i_PlateNumber)
@@ -313,36 +324,15 @@ namespace Ex03.ConsoleUI.GarageManagerHandler
             return (maxEnergyTank, statusEnergy);
         }
 
-        private void addCar(VehicleData i_VehicleData, string i_PlateNumber)
+        private void addCar(VehicleDto.VehicleDtoBuilder i_VehicleDtoBuilder)
         {
             string carColor = getCarColor();
             int numberOfDoors = getNumberOfDoors();
 
-            var vehicleDto = new VehicleDto.VehicleDtoBuilder()
-                    .SetPlateNumber(i_PlateNumber)
-                    .SetModelName(i_VehicleData.ModelName)
-                    .SetType("Car")
-                    .SetColor(carColor)
-                    .SetCapacityEnergy(i_VehicleData.EnergyMaxTank)
-                    .SetCurrentEnergy(i_VehicleData.EnergyStatus)
-                    .SetWheelsData(i_VehicleData.WheelsData)
-                    .SetNumbersOfDoors(numberOfDoors)
-                    .SetOwnerName(i_VehicleData.OwnerName)
-                    .SetOwnerPhone(i_VehicleData.OwnerPhone);
-            
-            if (i_VehicleData.IsFuel)
-            {
-                vehicleDto.SetEngineType("Fuel")
-                              .SetFuelType(getEngineType());
-            }
-            else
-            {
-                vehicleDto.SetEngineType("Electricy")
-                              .SetFuelType("Electricy");
-            }
-
-            VehicleDto vehicle = vehicleDto.Build();
-            r_Garage.AddVehicles(vehicle);
+            i_VehicleDtoBuilder
+                .SetType("Car")
+                .SetNumbersOfDoors(numberOfDoors)
+                .SetColor(carColor);
         }
 
         private string getEngineType()
