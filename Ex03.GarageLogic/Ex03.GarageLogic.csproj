@@ -57,6 +57,7 @@
     <Compile Include="Factory\VehicleFactory.cs" />
     <Compile Include="Factory\VehicleType.cs" />
     <Compile Include="Garage\AddressCard.cs" />
+    <Compile Include="Garage\Constants.cs" />
     <Compile Include="Garage\eState.cs" />
     <Compile Include="Garage\Garage.cs" />
   </ItemGroup>

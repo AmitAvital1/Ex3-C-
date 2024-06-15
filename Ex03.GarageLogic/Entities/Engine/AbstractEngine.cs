@@ -4,6 +4,11 @@
     {
         protected eEngineType m_FuelType;
 
+        public AbstractEngine(eEngineType i_FuelType)
+        {
+            this.m_FuelType = i_FuelType;
+        }
+
         public string FuelType()
         {
             return m_FuelType.ToString();

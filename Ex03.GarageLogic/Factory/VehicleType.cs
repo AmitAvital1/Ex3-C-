@@ -6,7 +6,6 @@
         FuelMotorcycle,
         ElectricCar,
         FuelCar,
-        ElectricTruck,
         FuelTruck
     }
 }

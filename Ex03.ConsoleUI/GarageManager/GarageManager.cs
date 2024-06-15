@@ -260,28 +260,25 @@ namespace Ex03.ConsoleUI.GarageManagerHandler
             string modelName = getVehicleModelName();
             (string ownerName, string ownerPhone) = getOwnerDetailsFromUser();
             int vehicleType = getVehicleTypeFromUser();
-            bool isFuel = askUserIfHeWantToEnterDataAboutVehicleWithFuelEngine();
-            (float energyMaxTank, float energyStatus) = getEnergyStatusOfTheCurrentVehicle(isFuel);
-            IList<WheelDto> wheelsData = getNumberOfAirInWheels();
+            bool isFuel = true;
 
             var vehicleDtoBuilder = new VehicleDto.VehicleDtoBuilder()
                 .SetPlateNumber(i_PlateNumber)
                 .SetModelName(modelName)
-                .SetCapacityEnergy(energyMaxTank)
-                .SetCurrentEnergy(energyStatus)
-                .SetWheelsData(wheelsData)
                 .SetOwnerName(ownerName)
                 .SetOwnerPhone(ownerPhone);
 
             switch (vehicleType)
             {
                 case 1:
+                    isFuel = askUserIfHeWantToEnterDataAboutVehicleWithFuelEngine();
                     addCar(vehicleDtoBuilder);
                     break;
                 case 2:
                     addTruck(vehicleDtoBuilder);
                     break;
                 case 3:
+                    isFuel = askUserIfHeWantToEnterDataAboutVehicleWithFuelEngine();
                     addMotorcycle(vehicleDtoBuilder);
                     break;
                 default:
@@ -292,15 +289,15 @@ namespace Ex03.ConsoleUI.GarageManagerHandler
 
             if (isFuel)
             {
-                vehicleDtoBuilder.SetEngineType("Fuel")
-                    .SetFuelType(getEngineType());
+                vehicleDtoBuilder.SetEngineType("Fuel");
             }
             else
             {
-                vehicleDtoBuilder.SetEngineType("Electricy")
-                    .SetFuelType("Electricy");
+                vehicleDtoBuilder.SetEngineType("Electricy");
             }
 
+            float energyStatus = getEnergyStatusOfTheCurrentVehicle(isFuel);
+            vehicleDtoBuilder.SetCurrentEnergy(energyStatus);
             VehicleDto vehicle = vehicleDtoBuilder.Build();
             r_Garage.AddVehicles(vehicle);
         }
@@ -310,23 +307,27 @@ namespace Ex03.ConsoleUI.GarageManagerHandler
             int numberOfDoors = getNumberOfDoors();
             float transportCapacity = getTransportCapacity();
             bool isDangerous = getTruckDangerous();
+            IList<WheelDto> wheelsData = getNumberOfAirInWheels(Constants.sr_TruckMaxWheels);
 
             i_VehicleDtoBuilder
                 .SetType("Truck")
                 .SetIsTransportDangerous(isDangerous)
                 .SetNumbersOfDoors(numberOfDoors)
-                .SetTransportCapacity(transportCapacity);
+                .SetTransportCapacity(transportCapacity)
+                .SetWheelsData(wheelsData);
         }
 
         private void addMotorcycle(VehicleDto.VehicleDtoBuilder i_VehicleDtoBuilder)
         {
             string licenseType = getLicenseType();
             int engineCapacity = getMotorcycleEngineCapacity();
+            IList<WheelDto> wheelsData = getNumberOfAirInWheels(Constants.sr_MotorcycleMaxWheels);
 
             i_VehicleDtoBuilder
                 .SetType("Motorcycle")
                 .SetLicenseType(licenseType)
-                .SetEngineCapacity(engineCapacity);
+                .SetEngineCapacity(engineCapacity)
+                .SetWheelsData(wheelsData);
         }
 
         private string getLicenseType()
@@ -408,20 +409,11 @@ namespace Ex03.ConsoleUI.GarageManagerHandler
             return (ownerName, ownerPhone);
         }
 
-        private IList<WheelDto> getNumberOfAirInWheels()
+        private IList<WheelDto> getNumberOfAirInWheels(int i_NumOfWheels)
         {
-            int numOfWheels;
+            IList<WheelDto> wheelsData = new List<WheelDto>(i_NumOfWheels);
 
-            Console.WriteLine("Please enter the number of wheels:");
-
-            while (!int.TryParse(Console.ReadLine(), out numOfWheels) || numOfWheels < 0)
-            {
-                Console.WriteLine("Invalid input. Please enter a valid positive number for the wheels number:");
-            }
-
-            IList<WheelDto> wheelsData = new List<WheelDto>(numOfWheels);
-
-            for(int i = 0; i < numOfWheels; i++)
+            for(int i = 0; i < i_NumOfWheels; i++)
             {
                 wheelsData.Add(getWheelDetails());
             }
@@ -459,24 +451,9 @@ namespace Ex03.ConsoleUI.GarageManagerHandler
             };
         }
 
-        private (float, float) getEnergyStatusOfTheCurrentVehicle(bool i_IsFuel)
+        private float getEnergyStatusOfTheCurrentVehicle(bool i_IsFuel)
         {
-            float maxEnergyTank;
             float statusEnergy;
-
-            if (i_IsFuel)
-            {
-                Console.WriteLine("Please enter the max amount of fuel tank in liters:");
-            }
-            else
-            {
-                Console.WriteLine("Please enter the max battery capacity in hours:");
-            }
-
-            while (!float.TryParse(Console.ReadLine(), out maxEnergyTank) || maxEnergyTank < 0)
-            {
-                Console.WriteLine("Invalid input. Please enter a valid positive number:");
-            }
 
             if (i_IsFuel)
             {
@@ -487,23 +464,25 @@ namespace Ex03.ConsoleUI.GarageManagerHandler
                 Console.WriteLine("Please enter the current battery status (in hours):");
             }
 
-            while (!float.TryParse(Console.ReadLine(), out statusEnergy) || statusEnergy < 0 || maxEnergyTank < statusEnergy)
+            while (!float.TryParse(Console.ReadLine(), out statusEnergy) || statusEnergy < 0)
             {
                 Console.WriteLine("Invalid input. Please enter a valid positive number or number that not bigger then the tank:");
             }
 
-            return (maxEnergyTank, statusEnergy);
+            return statusEnergy;
         }
 
         private void addCar(VehicleDto.VehicleDtoBuilder i_VehicleDtoBuilder)
         {
             string carColor = getCarColor();
             int numberOfDoors = getNumberOfDoors();
+            IList<WheelDto> wheelsData = getNumberOfAirInWheels(Constants.sr_CarMaxWheels);
 
             i_VehicleDtoBuilder
                 .SetType("Car")
                 .SetNumbersOfDoors(numberOfDoors)
-                .SetColor(carColor);
+                .SetColor(carColor)
+                .SetWheelsData(wheelsData);
         }
 
         private string getEngineType()

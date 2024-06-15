@@ -48,7 +48,7 @@ namespace Ex03.GarageLogic.Garage
                 case "car":
                     return i_EngineType.ToLower() == "electric" ? eVehicleType.ElectricCar : eVehicleType.FuelCar;
                 case "truck":
-                    return i_EngineType.ToLower() == "electric" ? eVehicleType.ElectricTruck : eVehicleType.FuelTruck;
+                    return eVehicleType.FuelTruck;
                 default:
                     throw new ArgumentException("Invalid vehicle type.");
             }
