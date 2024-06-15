@@ -19,6 +19,10 @@ namespace Ex03.GarageLogic.Factory.Dto
         public float CurrentEnergy { get; set; }
         public bool IsTransportDangerous { get; set; }
         public float TransportCapacity { get; set; }
+        public string PlateNumber { get; set; }
+        public float WheelCapacity { get; set; }
+        public string OwnerName { get; set; }
+        public string OwnerPhone { get; set; }
 
         public class VehicleDtoBuilder
         {
@@ -33,10 +37,38 @@ namespace Ex03.GarageLogic.Factory.Dto
             private float m_CurrentEnergy;
             private bool m_IsTransportDangerous;
             private float m_TransportCapacity;
+            private string m_PlateNumber;
+            private float m_WheelCapacity;
+            private string m_OwnerName;
+            private string m_OwnerPhone;
 
             public VehicleDtoBuilder SetCurrentEnergy(float i_CurrentEnergy)
             {
                 this.m_CurrentEnergy = i_CurrentEnergy;
+                return this;
+            }
+
+            public VehicleDtoBuilder SetOwnerName(string i_OwnerName)
+            {
+                this.m_OwnerName = i_OwnerName;
+                return this;
+            }
+
+            public VehicleDtoBuilder SetOwnerPhone(string i_OwnerPhone)
+            {
+                this.m_OwnerPhone = i_OwnerPhone;
+                return this;
+            }
+
+            public VehicleDtoBuilder SetWheelCapacity(float i_WheelCapacity)
+            {
+                this.m_WheelCapacity = i_WheelCapacity;
+                return this;
+            }
+
+            public VehicleDtoBuilder SetPlateNumber(string i_PlateNumber)
+            {
+                this.m_PlateNumber = i_PlateNumber;
                 return this;
             }
 
@@ -114,7 +146,11 @@ namespace Ex03.GarageLogic.Factory.Dto
                     NumberOfDoors = this.m_NumberOfDoors,
                     CurrentEnergy = this.m_CurrentEnergy,
                     IsTransportDangerous = this.m_IsTransportDangerous,
-                    TransportCapacity = this.m_TransportCapacity
+                    TransportCapacity = this.m_TransportCapacity,
+                    PlateNumber = this.m_PlateNumber,
+                    WheelCapacity = this.m_WheelCapacity,
+                    OwnerName = this.m_OwnerName,
+                    OwnerPhone = this.m_OwnerPhone
                 };
             }
         }
