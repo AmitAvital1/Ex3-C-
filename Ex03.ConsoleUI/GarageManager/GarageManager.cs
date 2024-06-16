@@ -106,7 +106,7 @@ namespace Ex03.ConsoleUI.GarageManagerHandler
 
         private void showPlateNumbersWithFilterOptions()
         {
-            Console.WriteLine("Please enter a filter option (Repair, Repaired, Paid):");
+            Console.WriteLine("Please enter a filter option (Repair, Repaired, Paid, All):");
 
             string filterOption = Console.ReadLine();
             IList<string> vehiclePlateNumbers = r_Garage.GetListOFVwhicleByFilter(filterOption);
@@ -131,9 +131,9 @@ namespace Ex03.ConsoleUI.GarageManagerHandler
 
             if (r_Garage.CheckIfCarExistInGarage(plateNumber))
             {
-                Console.WriteLine("Please enter the new state of the vehicle (Repair, Repaired, Paid):");
+                Console.WriteLine("Please enter the new state of the vehicle (Repair, Repaired, Paid, All):");
                 string newStateInput = Console.ReadLine();
-
+               
                 if (Enum.TryParse<eState>(newStateInput, true, out eState newState) && Enum.IsDefined(typeof(eState), newState))
                 {
                     r_Garage.ChangeVehicleState(plateNumber, newState);

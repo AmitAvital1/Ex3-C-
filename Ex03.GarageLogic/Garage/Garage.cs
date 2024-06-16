@@ -79,21 +79,31 @@ namespace Ex03.GarageLogic.Garage
         {
             IList<string> filteredPlateNumbers = new List<string>();
 
-            eState filterState;
-
-            if (!Enum.TryParse<eState>(i_Filter, true, out filterState))
+            if (i_Filter.Equals(Constants.sr_AllFilter))
             {
-                throw new ArgumentException($"Invalid filter option: {i_Filter}");
-            }
-
-            foreach (var vehicle in m_Vehicles)
-            {
-                if (vehicle.m_State == filterState)
+                foreach (var vehicle in m_Vehicles)
                 {
                     filteredPlateNumbers.Add(vehicle.m_Vechile.GetPlateNumber());
                 }
             }
+            else
+            {
+                eState filterState;
 
+                if (!Enum.TryParse<eState>(i_Filter, true, out filterState))
+                {
+                    throw new ArgumentException($"Invalid filter option: {i_Filter}");
+                }
+
+                foreach (var vehicle in m_Vehicles)
+                {
+                    if (vehicle.m_State == filterState)
+                    {
+                        filteredPlateNumbers.Add(vehicle.m_Vechile.GetPlateNumber());
+                    }
+                }
+            }
+           
             return filteredPlateNumbers;
         }
 

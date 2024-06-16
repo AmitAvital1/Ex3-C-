@@ -19,5 +19,6 @@ namespace Ex03.GarageLogic.Garage
         public static readonly float sr_TruckMaxWheelsPressure = 28;
         public static readonly int sr_TruckMaxWheels = 12;
         public static readonly float sr_FuelEngineTruckMaxCapacity = 120f;
+        public static readonly string sr_AllFilter = "All";
     }
 }
