@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Ex03.GarageLogic.Entities.Engine;
 using Ex03.GarageLogic.Entities.Wheels;
 using Ex03.GarageLogic.Factory.Dto;
@@ -55,30 +51,35 @@ namespace Ex03.GarageLogic.Entities.Vehicles.CarHandler
             public CarBuilder SetColor(string i_Color)
             {
                 m_Color = i_Color;
+
                 return this;
             }
 
             public CarBuilder SetNumOfDoors(int i_NumOfDoors)
             {
                 m_NumOfDoors = i_NumOfDoors;
+
                 return this;
             }
 
             public CarBuilder SetEngine(AbstractEngine i_Engine)
             {
                 m_Engine = i_Engine;
+
                 return this;
             }
 
             public CarBuilder SetModelName(string i_ModelName)
             {
                 m_ModelName = i_ModelName;
+
                 return this;
             }
 
             public CarBuilder SetPlateNumber(string i_PlateNumber)
             {
                 m_PlateNumber = i_PlateNumber;
+
                 return this;
             }
 
@@ -90,8 +91,8 @@ namespace Ex03.GarageLogic.Entities.Vehicles.CarHandler
                 {
                     wheels.Add(new Wheel(wheel.ManufacturerName, wheel.CurrentAirPressure, Constants.sr_CarMaxWheelsPressure));
                 }
-
                 m_Wheels = wheels;
+
                 return this;
             }
 

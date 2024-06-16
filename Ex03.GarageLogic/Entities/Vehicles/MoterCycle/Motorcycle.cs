@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Ex03.GarageLogic.Entities.Engine;
-using Ex03.GarageLogic.Entities.Vehicles.CarHandler;
 using Ex03.GarageLogic.Entities.Wheels;
 using Ex03.GarageLogic.Factory.Dto;
 using Ex03.GarageLogic.Garage;
@@ -52,30 +48,35 @@ namespace Ex03.GarageLogic.Entities.Vehicles.MotorcycleHandler
             public MotorcycleBuilder SetLicenseType(string i_LicenseType)
             {
                 m_LicenseType = i_LicenseType;
+
                 return this;
             }
 
             public MotorcycleBuilder SetEngineCapacity(int i_EngineCapacity)
             {
                 m_EngineCapacity = i_EngineCapacity;
+
                 return this;
             }
 
             public MotorcycleBuilder SetEngine(AbstractEngine i_Engine)
             {
                 m_Engine = i_Engine;
+
                 return this;
             }
 
             public MotorcycleBuilder SetModelName(string i_ModelName)
             {
                 m_ModelName = i_ModelName;
+
                 return this;
             }
 
             public MotorcycleBuilder SetPlateNumber(string i_PlateNumber)
             {
                 m_PlateNumber = i_PlateNumber;
+
                 return this;
             }
 
@@ -87,8 +88,8 @@ namespace Ex03.GarageLogic.Entities.Vehicles.MotorcycleHandler
                 {
                     wheels.Add(new Wheel(wheel.ManufacturerName, wheel.CurrentAirPressure, Constants.sr_MotorcycleMaxWheelsPressure));
                 }
-
                 m_Wheels = wheels;
+
                 return this;
             }
 

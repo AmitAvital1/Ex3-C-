@@ -1,13 +1,8 @@
-﻿using Ex03.GarageLogic.Entities.Engine;
-using Ex03.GarageLogic.Garage;
+﻿using Ex03.GarageLogic.Garage;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Ex03.GarageLogic.Factory.Dto;
-using Ex03.ConsoleUI.VehicleDataHandler;
 using Ex03.GarageLogic.Exception;
 
 namespace Ex03.ConsoleUI.GarageManagerHandler

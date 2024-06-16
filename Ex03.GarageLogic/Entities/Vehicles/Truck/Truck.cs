@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Ex03.GarageLogic.Entities.Engine;
 using Ex03.GarageLogic.Entities.Wheels;
 using Ex03.GarageLogic.Factory.Dto;
@@ -85,8 +82,8 @@ namespace Ex03.GarageLogic.Entities.Vehicles
                 {
                     wheels.Add(new Wheel(wheel.ManufacturerName, wheel.CurrentAirPressure, Constants.sr_TruckMaxWheelsPressure));
                 }
-
                 m_Wheels = wheels;
+
                 return this;
             }
 
