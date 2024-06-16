@@ -205,7 +205,7 @@ namespace Ex03.ConsoleUI.GarageManagerHandler
                     }
                     else
                     {
-                        throw new ValueOutOfRangeException("Fuel amount exceeds the maximum capacity. Please enter a valid amount.");
+                        throw new ValueOutOfRangeException(0, r_Garage.GetTankCapacity(i_PlateNumber), "air pressure");
                     }
                 }
                 else
@@ -488,8 +488,18 @@ namespace Ex03.ConsoleUI.GarageManagerHandler
             Console.WriteLine("Please enter the owner's name:");
             string ownerName = Console.ReadLine();
 
+            if(int.TryParse(ownerName, out _))
+            {
+                throw new FormatException("Owner name cannot be a numeric");
+            }
+
             Console.WriteLine("Please enter the owner's phone number:");
             string ownerPhone = Console.ReadLine();
+
+            if (!isPhoneNumberValid(ownerPhone))
+            {
+                throw new FormatException("Phone number must contain only numbers");
+            }
 
             return (ownerName, ownerPhone);
         }
@@ -654,6 +664,18 @@ namespace Ex03.ConsoleUI.GarageManagerHandler
 
             return userInput == "fuel";
         }
-        
+
+        private bool isPhoneNumberValid(string i_PhoneNumber)
+        {
+            foreach (char c in i_PhoneNumber)
+            {
+                if (!char.IsDigit(c))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
     }
 }
