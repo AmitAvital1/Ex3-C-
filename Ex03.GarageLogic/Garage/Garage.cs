@@ -36,7 +36,7 @@ namespace Ex03.GarageLogic.Garage
                 m_Vechile = i_Vehicle,
                 m_OwnerName = i_VehicleDto.OwnerName,
                 m_OwnerPhone = i_VehicleDto.OwnerPhone,
-                m_State = eState.Repaired
+                m_State = eState.Repair
             };
 
             return card;
