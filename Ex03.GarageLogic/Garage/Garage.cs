@@ -146,6 +146,12 @@ namespace Ex03.GarageLogic.Garage
             vehicle.m_Vechile.IsFuelDrive();
         }
 
+        public float GetTankCapacity(string i_PlateNumber)
+        {
+            AddressCard vehicle = getVehicleByPlateNumber(i_PlateNumber);
+            return vehicle.m_Vechile.GetMaxEnergy();
+        }
+
         public void IsElectricDrive(string i_PlateNumber)
         {
             AddressCard vehicle = getVehicleByPlateNumber(i_PlateNumber);

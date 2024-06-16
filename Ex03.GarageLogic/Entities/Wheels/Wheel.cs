@@ -17,7 +17,7 @@ namespace Ex03.GarageLogic.Entities.Wheels
         {
             if (i_CurrentAirPressure > i_MaxAirPressure)
             {
-                throw new ValueOutOfRangeException("Error: Current pressure bigger then max air pressure");
+                throw new ValueOutOfRangeException(0, i_MaxAirPressure, "air pressure");
             }
 
             this.r_ManufacturerName = i_ManufacturerName;
