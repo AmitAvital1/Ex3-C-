@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ex03.GarageLogic.Exception;
 
 namespace Ex03.GarageLogic.Entities.Wheels
 {
@@ -16,7 +17,7 @@ namespace Ex03.GarageLogic.Entities.Wheels
         {
             if (i_CurrentAirPressure > i_MaxAirPressure)
             {
-                throw new ArgumentException("Error: Current pressure bigger then max air pressure");
+                throw new ValueOutOfRangeException("Error: Current pressure bigger then max air pressure");
             }
 
             this.r_ManufacturerName = i_ManufacturerName;
