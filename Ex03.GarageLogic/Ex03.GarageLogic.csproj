@@ -52,6 +52,7 @@
     <Compile Include="Entities\Vehicles\Truck\Truck.cs" />
     <Compile Include="Entities\Vehicles\Vehicle.cs" />
     <Compile Include="Entities\Wheels\Wheel.cs" />
+    <Compile Include="Exception\ValueOutOfRangeException.cs" />
     <Compile Include="Factory\Dto\VehiclesDto.cs" />
     <Compile Include="Factory\Dto\WheelDto.cs" />
     <Compile Include="Factory\VehicleFactory.cs" />

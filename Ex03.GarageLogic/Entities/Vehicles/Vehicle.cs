@@ -69,9 +69,9 @@ namespace Ex03.GarageLogic.Entities.Vehicles
             }
         }
 
-        public void SetCurrentVehcile(float i_EnergyAmount)
+        public void SetCurrentVehicle(float i_EnergyAmount)
         {
-            r_Engine.AddEnergy(i_EnergyAmount);
+            r_Engine.AddMaxTankIfNeeded(i_EnergyAmount);
         }
 
         public void IsFuelDrive()
@@ -102,6 +102,16 @@ namespace Ex03.GarageLogic.Entities.Vehicles
         private void isEngineNotAElectricEngine()
         {
             throw new InvalidOperationException("Vehicle engine is not a ElectricEngine.");
+        }
+
+        public float GetCurrentEnergy()
+        {
+            return r_Engine.Energy();
+        }
+
+        public float GetMaxEnergy()
+        {
+            return r_Engine.MaxEnergy();
         }
     }
 }

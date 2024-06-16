@@ -33,7 +33,7 @@ namespace Ex03.GarageLogic.Entities.Engine
             return r_MaxFuel;
         }
 
-        public override void AddEnergy(float i_EnergyUnit)
+        protected override void SetEnergy(float i_EnergyUnit)
         {
             m_CurrentFuel = i_EnergyUnit;
         }

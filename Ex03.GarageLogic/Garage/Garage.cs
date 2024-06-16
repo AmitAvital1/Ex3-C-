@@ -47,9 +47,9 @@ namespace Ex03.GarageLogic.Garage
             switch (i_VehicleType.ToLower())
             {
                 case "motorcycle":
-                    return i_EngineType.ToLower() == "electric" ? eVehicleType.ElectricMotorcycle : eVehicleType.FuelMotorcycle;
+                    return i_EngineType.ToLower() == eEngineType.Electricy.ToString().ToLower() ? eVehicleType.ElectricMotorcycle : eVehicleType.FuelMotorcycle;
                 case "car":
-                    return i_EngineType.ToLower() == "electric" ? eVehicleType.ElectricCar : eVehicleType.FuelCar;
+                    return i_EngineType.ToLower() == eEngineType.Electricy.ToString().ToLower() ? eVehicleType.ElectricCar : eVehicleType.FuelCar;
                 case "truck":
                     return eVehicleType.FuelTruck;
                 default:
@@ -65,7 +65,7 @@ namespace Ex03.GarageLogic.Garage
             {
                 string currentCarPlateNumber = existingCar.m_Vechile.GetPlateNumber();
                 
-                if ( currentCarPlateNumber.Equals(i_Car))
+                if (currentCarPlateNumber.Equals(i_Car))
                 {
                     isCarExistInGarage = true;
                     break;
@@ -137,7 +137,7 @@ namespace Ex03.GarageLogic.Garage
         public void SetNewEnergyAmount(string i_PlateNumber, float i_FuelAmount)
         {
             AddressCard vehicle = getVehicleByPlateNumber(i_PlateNumber);
-            vehicle.m_Vechile.SetCurrentVehcile(i_FuelAmount);
+            vehicle.m_Vechile.SetCurrentVehicle(i_FuelAmount);
         }
 
         public void IsFuelDrive(string i_PlateNumber)
@@ -185,13 +185,14 @@ namespace Ex03.GarageLogic.Garage
             AddressCard addressCard = getVehicleByPlateNumber(i_PlateNumber);
 
             var vehicleDto = new VehicleDto.VehicleDtoBuilder()
-                    .SetPlateNumber(i_PlateNumber)
-                    .SetOwnerName(addressCard.m_OwnerPhone)
-                    .SetOwnerPhone(addressCard.m_OwnerPhone)
-                    .SetModelName(addressCard.m_Vechile.GetModelName())
-                    .SetWheelsData(convertWheelsToDto(addressCard.m_Vechile.GetWheels()))
-                    .SetFuelType(addressCard.m_Vechile.GetFuelType().ToString())
-                    .SetStatusInGarage(addressCard.m_State.ToString());
+                .SetPlateNumber(i_PlateNumber)
+                .SetOwnerName(addressCard.m_OwnerName).SetOwnerPhone(addressCard.m_OwnerPhone)
+                .SetModelName(addressCard.m_Vechile.GetModelName())
+                .SetWheelsData(convertWheelsToDto(addressCard.m_Vechile.GetWheels()))
+                .SetFuelType(addressCard.m_Vechile.GetFuelType().ToString())
+                .SetStatusInGarage(addressCard.m_State.ToString())
+                .SetCapacityEnergy(addressCard.m_Vechile.GetMaxEnergy())
+                .SetCurrentEnergy(addressCard.m_Vechile.GetCurrentEnergy());
             
             if (addressCard.m_Vechile.IsCar())
             {

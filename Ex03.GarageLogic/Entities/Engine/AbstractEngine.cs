@@ -15,10 +15,20 @@
         }
 
         public abstract float Energy();
-        
         public abstract float MaxEnergy();
-        
-        public abstract void AddEnergy(float i_EnergyUnit);
+        protected abstract void SetEnergy(float i_EnergyUnit);
+
+        public void AddMaxTankIfNeeded(float i_EnergyUnit)
+        {
+            if(Energy() + i_EnergyUnit > MaxEnergy())
+            {
+                SetEnergy(MaxEnergy());
+            }
+            else
+            {
+                SetEnergy(i_EnergyUnit + Energy());
+            }
+        }
         
         public eEngineType GetFuelType()
         {

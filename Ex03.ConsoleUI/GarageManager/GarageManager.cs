@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Ex03.GarageLogic.Factory.Dto;
 using Ex03.ConsoleUI.VehicleDataHandler;
+using Ex03.GarageLogic.Exception;
 
 namespace Ex03.ConsoleUI.GarageManagerHandler
 {
@@ -22,16 +23,16 @@ namespace Ex03.ConsoleUI.GarageManagerHandler
 
         public void ActivateGarage()
         {
-           try
+           while (true)
            {
-               while (true)
+               try
                {
                    showMenu();
                }
-           }
-           catch (Exception ex) 
-           {
-               Console.WriteLine("An error occurred: " + ex.Message);
+               catch(Exception ex)
+               {
+                   Console.WriteLine("An error occurred: " + ex.Message);
+               }
            }
         }
 
@@ -106,8 +107,8 @@ namespace Ex03.ConsoleUI.GarageManagerHandler
         private void showPlateNumbersWithFilterOptions()
         {
             Console.WriteLine("Please enter a filter option (Repair, Repaired, Paid):");
-            string filterOption = Console.ReadLine();
 
+            string filterOption = Console.ReadLine();
             IList<string> vehiclePlateNumbers = r_Garage.GetListOFVwhicleByFilter(filterOption);
             
             if (vehiclePlateNumbers.Count == 0)
@@ -204,7 +205,7 @@ namespace Ex03.ConsoleUI.GarageManagerHandler
                     }
                     else
                     {
-                        Console.WriteLine("Fuel amount exceeds the maximum capacity. Please enter a valid amount.");
+                        throw new ValueOutOfRangeException("Fuel amount exceeds the maximum capacity. Please enter a valid amount.");
                     }
                 }
                 else
@@ -220,8 +221,6 @@ namespace Ex03.ConsoleUI.GarageManagerHandler
         {
             string[] validFuelTypes = { "Soler", "Octan95", "Octan96", "Octan98" };
             string fuelType = "";
-
-            Console.WriteLine("Please enter the type of fuel (Soler, Octan95, Octan96, Octan98):");
            
             while (true)
             {
@@ -294,6 +293,18 @@ namespace Ex03.ConsoleUI.GarageManagerHandler
             Console.WriteLine($"Owner Name: {vehicleDto.OwnerName}");
             Console.WriteLine($"Owner Phone: {vehicleDto.OwnerPhone}");
             Console.WriteLine($"Model Name: {vehicleDto.ModelName}");
+
+            if(vehicleDto.FuelType.ToLower() == "electricy")
+            {
+                Console.WriteLine($"Max capacity electric engine in hours: {vehicleDto.CapacityEnergy}");
+                Console.WriteLine($"Current electricy engine in hours: {vehicleDto.CurrentEnergy}");
+            }
+            else
+            {
+                Console.WriteLine($"Max capacity fuel engine in liters: {vehicleDto.CapacityEnergy}");
+                Console.WriteLine($"Current fuel engine in liters: {vehicleDto.CurrentEnergy}");
+            }
+
             Console.WriteLine($"Wheels Data:");
 
             foreach (var wheel in vehicleDto.WheelsData)
@@ -301,7 +312,7 @@ namespace Ex03.ConsoleUI.GarageManagerHandler
                 Console.WriteLine($"  Manufacturer: {wheel.ManufacturerName}, Max Air Pressure: {wheel.MaxAirPressure}, Current Air Pressure: {wheel.CurrentAirPressure}");
             }
 
-            Console.WriteLine($"Fuel Type: {vehicleDto.FuelType}");
+            Console.WriteLine($"Engine Type: {vehicleDto.FuelType}");
             Console.WriteLine($"Status in Garage: {vehicleDto.StatusInGarage}");
 
         }
@@ -430,7 +441,7 @@ namespace Ex03.ConsoleUI.GarageManagerHandler
         {
             float transportCapacity;
 
-            Console.WriteLine("Please enter if the truck transport capacity:");
+            Console.WriteLine("Please enter the truck transport capacity:");
 
             while (!float.TryParse(Console.ReadLine(), out transportCapacity) || transportCapacity <= 0)
             {
